@@ -8,6 +8,13 @@ export const themeColors: {
   success: { light: string; dark: string };
   warning: { light: string; dark: string };
   error: { light: string; dark: string };
+  secondary: { light: string; dark: string };
+  accent: { light: string; dark: string };
+  delta: { light: string; dark: string };
+  theta: { light: string; dark: string };
+  alpha: { light: string; dark: string };
+  beta: { light: string; dark: string };
+  gamma: { light: string; dark: string };
 };
 
 declare const themeConfig: {

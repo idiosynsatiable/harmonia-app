@@ -1,9 +1,9 @@
 import { Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Platform } from "react-native";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Platform } from "react-native";
 import { useColors } from "@/hooks/use-colors";
 
 export default function TabLayout() {
@@ -15,7 +15,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.tint,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.muted,
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarStyle: {
@@ -26,13 +27,45 @@ export default function TabLayout() {
           borderTopColor: colors.border,
           borderTopWidth: 0.5,
         },
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: '600',
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={26} name="house.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="studio"
+        options={{
+          title: "Studio",
+          tabBarIcon: ({ color }) => <IconSymbol size={26} name="waveform" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="presets"
+        options={{
+          title: "Presets",
+          tabBarIcon: ({ color }) => <IconSymbol size={26} name="music.note.list" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="security"
+        options={{
+          title: "Security",
+          tabBarIcon: ({ color }) => <IconSymbol size={26} name="shield.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color }) => <IconSymbol size={26} name="gearshape.fill" color={color} />,
         }}
       />
     </Tabs>
