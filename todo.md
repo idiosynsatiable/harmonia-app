@@ -199,3 +199,84 @@
 - [ ] Bluetooth reconnection within 2 seconds
 - [ ] Camera streams at 30fps minimum
 - [ ] App store submission approved
+
+
+## Monetization & Payment Integration
+
+### Stripe Integration
+- [ ] Install Stripe SDK for React Native
+- [ ] Create Stripe account and get API keys
+- [ ] Implement subscription payment flow
+- [ ] Implement one-time payment flow (Lifetime unlock)
+- [ ] Implement in-app purchases (IAP)
+- [ ] Add payment success/failure screens
+- [ ] Implement subscription management
+- [ ] Add cancel subscription flow
+- [ ] Implement refund handling
+- [ ] Add payment receipt generation
+
+### Pricing Tiers
+- [ ] Implement Free tier with feature limitations
+- [ ] Implement Premium tier ($9.99/month, $79.99/year)
+- [ ] Implement Ultimate tier ($19.99/month, $149.99/year)
+- [ ] Implement Lifetime unlock ($49.99 one-time)
+- [ ] Create pricing comparison screen
+- [ ] Add "Upgrade" prompts throughout app
+- [ ] Implement 7-day free trial
+- [ ] Add trial expiration handling
+
+### In-App Purchases
+- [ ] Gamma Wave Pack ($2.99)
+- [ ] Isochronic Tones ($3.99)
+- [ ] OM Chanting ($4.99)
+- [ ] Noise Color Pack ($2.99)
+- [ ] Preset Bundle ($1.99)
+- [ ] Security Add-on ($9.99)
+- [ ] Remove Ads ($4.99)
+
+### Feature Gating
+- [ ] Lock Beta/Gamma waves for free users
+- [ ] Lock isochronic tones for free users
+- [ ] Lock OM chanting for free users
+- [ ] Lock custom presets for free users
+- [ ] Lock security features for free users
+- [ ] Add 10-minute session limit for free users
+- [ ] Show ads for free users (non-intrusive)
+- [ ] Implement feature unlock logic
+
+### Subscription Management
+- [ ] Create user subscription database schema
+- [ ] Implement subscription status checking
+- [ ] Add subscription renewal handling
+- [ ] Implement subscription upgrade/downgrade
+- [ ] Add subscription cancellation
+- [ ] Implement grace period for failed payments
+- [ ] Add subscription restoration (for reinstalls)
+- [ ] Create admin dashboard for subscriptions
+
+### Analytics & Tracking
+- [ ] Track free-to-paid conversion rate
+- [ ] Track subscription churn rate
+- [ ] Track IAP purchase rate
+- [ ] Track feature usage by tier
+- [ ] Track trial-to-paid conversion
+- [ ] Implement revenue analytics dashboard
+- [ ] Add cohort analysis
+- [ ] Track LTV (Lifetime Value)
+
+### Google Play Integration
+- [ ] Set up Google Play Console
+- [ ] Configure in-app billing
+- [ ] Add subscription products
+- [ ] Add one-time purchase products
+- [ ] Test payment flow in sandbox
+- [ ] Implement Play Store receipt validation
+- [ ] Add Play Store subscription management link
+
+### Website Stripe Integration
+- [ ] Add Stripe checkout to website
+- [ ] Create subscription management portal
+- [ ] Sync website subscriptions with mobile app
+- [ ] Add payment method management
+- [ ] Implement invoice generation
+- [ ] Add billing history page
