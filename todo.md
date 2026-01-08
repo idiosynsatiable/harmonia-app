@@ -322,3 +322,129 @@
 - [x] Verify API endpoints are correct
 - [x] Verify Stripe price IDs match products
 - [x] Verify database schema is correct
+
+
+## New Feature Enhancements (2026-01-07)
+
+### Bluetooth Integration
+- [ ] Install expo-bluetooth package
+- [ ] Create Bluetooth manager service
+- [ ] Implement device scanning
+- [ ] Implement device pairing
+- [ ] Implement audio routing to Bluetooth devices
+- [ ] Add Bluetooth device selector UI
+- [ ] Test with car audio systems
+- [ ] Test with Bluetooth speakers
+- [ ] Test with Bluetooth headphones
+- [ ] Handle Bluetooth disconnection gracefully
+
+### Background Audio Playback
+- [ ] Configure expo-audio for background playback
+- [ ] Implement audio session management
+- [ ] Add lock screen controls (play/pause, skip)
+- [ ] Add notification with playback controls
+- [ ] Ensure audio continues when screen locks
+- [ ] Test battery impact of background playback
+- [ ] Add "keep screen awake" option for active sessions
+
+### 10-Day Free Trial System
+- [ ] Update subscription model to include 10-day trial
+- [ ] Implement trial tracking (start date, days remaining)
+- [ ] Add trial countdown UI
+- [ ] Show trial status in settings
+- [ ] Add "Upgrade Now" prompts during trial
+- [ ] Implement trial expiration logic
+- [ ] Add grace period after trial ends
+- [ ] Update Stripe integration for trial periods
+
+### Session Intent Selector
+- [ ] Create session intent selection screen (first launch)
+- [ ] Add intent categories (healing, meditation, focus, sleep, etc.)
+- [ ] Implement "What do you want from this session?" quick selector
+- [ ] Save user's session history
+- [ ] Recommend presets based on intent
+- [ ] Add intent-based analytics
+
+### Guided Meditations for Astral Projection
+- [ ] Write astral projection meditation scripts
+- [ ] Record or generate guided audio
+- [ ] Create meditation player UI
+- [ ] Add meditation library screen
+- [ ] Implement meditation categories (beginner, intermediate, advanced)
+- [ ] Add meditation progress tracking
+- [ ] Create meditation timer with intervals
+- [ ] Add background binaural beats during meditation
+
+### Educational Content
+- [ ] Write "Why These Sounds Work" article
+- [ ] Create trauma healing guide
+- [ ] Create surgery recovery guide
+- [ ] Create cancer support guide
+- [ ] Create self-enlightenment guide
+- [ ] Create telomere lengthening explanation
+- [ ] Create awareness enhancement guide
+- [ ] Add educational content screen
+- [ ] Add in-app learning modules
+- [ ] Create video tutorials (optional)
+
+### Vibrational Stage Techniques
+- [ ] Write vibrational stage guide
+- [ ] Create technique library (rope technique, roll-out, etc.)
+- [ ] Add step-by-step instructions
+- [ ] Create visualization exercises
+- [ ] Add progress tracking for techniques
+- [ ] Implement technique reminders
+- [ ] Add community tips section
+
+### Astrological Features (One-Time Purchases)
+- [ ] Design astrological banner system
+- [ ] Create Human Design chart generator
+- [ ] Create Natal Chart generator
+- [ ] Create Zodiac Sign backgrounds (12 signs)
+- [ ] Create Chinese Zodiac backgrounds (12 animals)
+- [ ] Implement banner customization UI
+- [ ] Add astrological profile screen
+- [ ] Integrate with birth date/time input
+- [ ] Create one-time purchase flow for each feature
+- [ ] Price: $4.99 per astrological feature
+
+### Free Tier Updates
+- [ ] Update session limit: 15 minutes (was 10 minutes)
+- [ ] Update isochronic tone limit: 5 minutes
+- [ ] Update binaural beat limit: 5 minutes
+- [ ] Add session timer with warnings at 1 min remaining
+- [ ] Show "Upgrade for unlimited" prompt at limit
+- [ ] Track daily usage statistics
+
+### Hemi-Sync Integration (Unlabeled)
+- [ ] Implement hemispheric synchronization algorithm
+- [ ] Add carrier frequency + beat frequency logic
+- [ ] Create "Brain Sync" preset category (don't mention Hemi-Sync)
+- [ ] Add "Whole Brain" mode
+- [ ] Test frequency accuracy for brain synchronization
+
+### Binaural Beats Maker
+- [ ] Create custom binaural beat builder UI
+- [ ] Add carrier frequency slider (100-500 Hz)
+- [ ] Add beat frequency slider (0.5-40 Hz)
+- [ ] Add preset save functionality
+- [ ] Add frequency presets (Delta, Theta, Alpha, Beta, Gamma)
+- [ ] Show real-time frequency display
+- [ ] Add stereo test (left/right channel verification)
+
+### Isochronic Tone Creator
+- [ ] Create custom isochronic tone builder UI
+- [ ] Add frequency slider (0.5-40 Hz)
+- [ ] Add pulse duration control
+- [ ] Add duty cycle control (25%, 50%, 75%)
+- [ ] Add waveform selector (sine, square, triangle)
+- [ ] Add preset save functionality
+- [ ] Show real-time waveform visualization
+
+### Session Onboarding
+- [ ] Create "Quick Start" flow on app launch
+- [ ] Add "What's your goal today?" selector
+- [ ] Options: Healing, Meditation, Focus, Sleep, Energy, Astral Projection
+- [ ] Auto-recommend preset based on goal
+- [ ] Add "Skip" option for advanced users
+- [ ] Remember last session goal
