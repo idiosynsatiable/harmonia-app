@@ -60,3 +60,9 @@ Thumbs.db
 *.tgz
 *.tar.gz
 .cache/
+
+# Python virtual environment
+venv/
+.venv/
+env/
+.env/
