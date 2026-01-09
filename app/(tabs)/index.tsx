@@ -1,126 +1,130 @@
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { ScreenContainer } from "@/components/screen-container";
 import { useColors } from "@/hooks/use-colors";
+import { useState } from "react";
+import { audioTracks, getTracksByType, type TrackType } from "@/lib/audio-tracks";
 
 /**
- * Home Screen - Clean, Minimal, Professional
+ * Library Screen - All 21 Tracks with Filters
  * 
- * Features:
- * - Today's Session (rotating daily)
- * - Continue Listening (if session active)
- * - Single primary CTA
- * - No clutter
+ * Filters:
+ * - Type: Binaural, Isochronic, Ambient, Harmonic
+ * - Duration: 10, 15, 30, 60 min
+ * - Favorites toggle
+ * 
+ * Sorting:
+ * - Default: Recommended
+ * - Optional: Alphabetical, Duration
  */
-export default function HomeScreen() {
+export default function LibraryScreen() {
   const colors = useColors();
+  const [activeFilter, setActiveFilter] = useState<string>("all");
 
-  // TODO: Implement session rotation logic
-  const todaysSession = {
-    name: "Deep Focus",
-    duration: 25,
-    description: "Sustained concentration with 14 Hz binaural beats",
-    type: "Binaural Beat",
-  };
+  // Get filtered tracks from data model
+  const filteredTracks = activeFilter === "all" 
+    ? audioTracks 
+    : getTracksByType(activeFilter as TrackType);
+
+  const renderTrackCard = (track: any) => (
+    <TouchableOpacity
+      key={track.id}
+      className="bg-surface rounded-xl p-4 mb-3 border border-border active:opacity-70"
+      style={{ borderColor: colors.border }}
+      onPress={() => {
+        // TODO: Navigate to session player
+        console.log("Play track:", track.name);
+      }}
+    >
+      <View className="flex-row items-center justify-between mb-2">
+        <View className="flex-1">
+          <Text className="text-base font-semibold text-foreground">
+            {track.name}
+          </Text>
+          {track.headphonesRequired && (
+            <Text className="text-xs text-muted mt-1">
+              🎧 Headphones required
+            </Text>
+          )}
+        </View>
+        <View className="bg-primary/20 px-2 py-1 rounded-full">
+          <Text className="text-xs font-semibold" style={{ color: colors.primary }}>
+            {track.duration} min
+          </Text>
+        </View>
+      </View>
+      
+      <View className="flex-row items-center gap-2">
+        <Text className="text-xs text-muted">
+          {track.type.charAt(0).toUpperCase() + track.type.slice(1)}
+        </Text>
+        <Text className="text-xs text-muted">•</Text>
+        <Text className="text-xs text-muted">
+          {track.frequency}
+        </Text>
+        <Text className="text-xs text-muted">•</Text>
+        <Text className="text-xs" style={{ color: colors.primary }}>
+          {track.category.charAt(0).toUpperCase() + track.category.slice(1)}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const FilterButton = ({ label, value }: { label: string; value: string }) => (
+    <TouchableOpacity
+      className="px-4 py-2 rounded-full mr-2"
+      style={{
+        backgroundColor: activeFilter === value ? colors.primary : colors.surface,
+        borderWidth: 1,
+        borderColor: activeFilter === value ? colors.primary : colors.border,
+      }}
+      onPress={() => setActiveFilter(value)}
+    >
+      <Text
+        className="text-sm font-semibold"
+        style={{ color: activeFilter === value ? "#ffffff" : colors.foreground }}
+      >
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <ScreenContainer className="p-6">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className="flex-1 gap-8">
-          {/* Welcome Header */}
-          <View className="items-center gap-2 mt-8">
-            <Text className="text-4xl font-bold text-foreground">Welcome to</Text>
-            <Text className="text-5xl font-bold" style={{ color: colors.primary }}>
-              Harmonia
-            </Text>
-            <Text className="text-base text-muted text-center mt-2">
-              Sound-based experiences for focus, relaxation, and mindful states
+        <View className="flex-1 gap-4">
+          {/* Header */}
+          <View className="mt-4">
+            <Text className="text-3xl font-bold text-foreground">Library</Text>
+            <Text className="text-base text-muted mt-1">
+              All 21 audio experiences
             </Text>
           </View>
 
-          {/* Today's Session Card */}
-          <View className="w-full max-w-sm self-center">
-            <Text className="text-lg font-semibold text-foreground mb-3">
-              ✨ Today's Free Session
-            </Text>
-            <View 
-              className="bg-surface rounded-2xl p-6 shadow-sm border border-border"
-              style={{ borderColor: colors.border }}
-            >
-              <View className="flex-row items-center justify-between mb-3">
-                <Text className="text-2xl font-bold text-foreground">
-                  {todaysSession.name}
-                </Text>
-                <View className="bg-primary/20 px-3 py-1 rounded-full">
-                  <Text className="text-sm font-semibold" style={{ color: colors.primary }}>
-                    {todaysSession.duration} min
-                  </Text>
-                </View>
-              </View>
-              
-              <Text className="text-sm text-muted mb-2">
-                {todaysSession.type}
-              </Text>
-              
-              <Text className="text-base text-foreground leading-relaxed mb-6">
-                {todaysSession.description}
-              </Text>
-
-              {/* Start Session Button */}
-              <TouchableOpacity
-                className="bg-primary rounded-full py-4 items-center active:opacity-80"
-                style={{ backgroundColor: colors.primary }}
-                onPress={() => {
-                  // TODO: Navigate to session player
-                  console.log("Start session:", todaysSession.name);
-                }}
-              >
-                <Text className="text-background font-semibold text-lg">
-                  Start Session
-                </Text>
-              </TouchableOpacity>
+          {/* Filters */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2">
+            <View className="flex-row">
+              <FilterButton label="All" value="all" />
+              <FilterButton label="Binaural" value="binaural" />
+              <FilterButton label="Isochronic" value="isochronic" />
+              <FilterButton label="Harmonic" value="harmonic" />
+              <FilterButton label="Ambient" value="ambient" />
             </View>
+          </ScrollView>
+
+          {/* Track Count */}
+          <Text className="text-sm text-muted">
+            {filteredTracks.length} {filteredTracks.length === 1 ? "track" : "tracks"}
+          </Text>
+
+          {/* Tracks List */}
+          <View>
+            {filteredTracks.map(renderTrackCard)}
           </View>
 
-          {/* Continue Listening (if applicable) */}
-          {/* TODO: Show only if session was interrupted */}
-          {/* <View className="w-full max-w-sm self-center">
-            <Text className="text-lg font-semibold text-foreground mb-3">
-              Continue Listening
-            </Text>
-            <View className="bg-surface rounded-2xl p-4 shadow-sm border border-border">
-              <Text className="text-base font-semibold text-foreground">
-                Meditative Drift
-              </Text>
-              <Text className="text-sm text-muted mt-1">
-                12 minutes remaining
-              </Text>
-            </View>
-          </View> */}
-
-          {/* Founding Listener Badge */}
-          <View className="w-full max-w-sm self-center mt-4">
-            <View 
-              className="bg-surface rounded-xl p-4 border border-border"
-              style={{ borderColor: colors.border }}
-            >
-              <View className="flex-row items-center gap-3">
-                <Text className="text-3xl">🌟</Text>
-                <View className="flex-1">
-                  <Text className="text-sm font-semibold text-foreground">
-                    Founding Listener
-                  </Text>
-                  <Text className="text-xs text-muted mt-1">
-                    You're using Harmonia in its early phase. Founding listeners will receive lifetime perks when premium launches.
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          {/* Safety Notice */}
-          <View className="w-full max-w-sm self-center mt-4">
+          {/* Safety Footer */}
+          <View className="mt-4 mb-8">
             <Text className="text-xs text-muted text-center leading-relaxed">
-              Not intended for medical use. Always listen at a comfortable volume. Use headphones for binaural beats.
+              Not intended for medical use. Stop listening if discomfort occurs.
             </Text>
           </View>
         </View>

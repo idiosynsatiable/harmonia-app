@@ -31,8 +31,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Listen",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="play.circle.fill" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -43,17 +43,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="library"
+        name="info"
         options={{
-          title: "Library",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="music.note.list" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="account"
-        options={{
-          title: "Account",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+          title: "Info",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="info.circle.fill" color={color} />,
         }}
       />
     </Tabs>

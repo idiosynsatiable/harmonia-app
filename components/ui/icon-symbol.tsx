@@ -14,22 +14,25 @@ type IconSymbolName = keyof typeof MAPPING;
  * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
  */
 const MAPPING = {
-  // Existing mappings
   "house.fill": "home",
   "paperplane.fill": "send",
   "chevron.left.forwardslash.chevron.right": "code",
   "chevron.right": "chevron-right",
-  
-  // New navigation icons
+  "play.circle.fill": "play-circle",
   "magnifyingglass": "search",
+  "info.circle.fill": "info",
+  "headphones": "headset",
+  "music.note": "music-note",
+  "leaf.fill": "eco",
+  "moon.stars.fill": "bedtime",
+  "lightbulb.fill": "lightbulb",
+  "heart.fill": "favorite",
+  "sparkles": "auto-awesome",
   "music.note.list": "library-music",
   "person.fill": "person",
-  
-  // Additional useful icons
   "play.fill": "play-arrow",
   "pause.fill": "pause",
   "stop.fill": "stop",
-  "heart.fill": "favorite",
   "heart": "favorite-border",
   "gear": "settings",
   "info.circle": "info",

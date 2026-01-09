@@ -19,6 +19,7 @@ export interface AudioTrack {
   bestFor: string;
   headphonesRequired: boolean;
   recommendedSession: string; // e.g., "15-30 minutes"
+  audioFile: string; // Path to MP3 file
 }
 
 /**
@@ -34,6 +35,7 @@ export const audioTracks: AudioTrack[] = [
   // ===== BINAURAL BEATS (7 tracks) =====
   {
     id: "alpha-focus",
+    audioFile: require("@/assets/audio/alpha-10hz-binaural.mp3"),
     name: "Alpha Focus",
     type: "binaural",
     frequency: "10 Hz",
@@ -46,6 +48,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "deep-focus",
+    audioFile: require("@/assets/audio/beta-14hz-binaural.mp3"),
     name: "Deep Focus",
     type: "binaural",
     frequency: "14 Hz",
@@ -58,6 +61,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "relaxed-awareness",
+    audioFile: require("@/assets/audio/alpha-8hz-binaural.mp3"),
     name: "Relaxed Awareness",
     type: "binaural",
     frequency: "8 Hz",
@@ -70,6 +74,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "meditative-drift",
+    audioFile: require("@/assets/audio/theta-6hz-binaural.mp3"),
     name: "Meditative Drift",
     type: "binaural",
     frequency: "6 Hz",
@@ -82,6 +87,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "deep-meditation",
+    audioFile: require("@/assets/audio/theta-4hz-binaural.mp3"),
     name: "Deep Meditation",
     type: "binaural",
     frequency: "4 Hz",
@@ -94,6 +100,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "sleep-descent",
+    audioFile: require("@/assets/audio/delta-2hz-binaural.mp3"),
     name: "Sleep Descent",
     type: "binaural",
     frequency: "2 Hz",
@@ -106,6 +113,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "deep-sleep",
+    audioFile: require("@/assets/audio/delta-3hz-binaural.mp3"),
     name: "Deep Sleep",
     type: "binaural",
     frequency: "1 Hz",
@@ -120,6 +128,7 @@ export const audioTracks: AudioTrack[] = [
   // ===== ISOCHRONIC TONES (5 tracks) =====
   {
     id: "calm-pulse",
+    audioFile: require("@/assets/audio/8hz-isochronic.mp3"),
     name: "Calm Pulse",
     type: "isochronic",
     frequency: "7 Hz",
@@ -132,6 +141,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "creative-flow",
+    audioFile: require("@/assets/audio/10hz-isochronic.mp3"),
     name: "Creative Flow",
     type: "isochronic",
     frequency: "9 Hz",
@@ -144,6 +154,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "study-pulse",
+    audioFile: require("@/assets/audio/12hz-isochronic.mp3"),
     name: "Study Pulse",
     type: "isochronic",
     frequency: "13 Hz",
@@ -156,6 +167,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "stress-relief",
+    audioFile: require("@/assets/audio/6hz-isochronic.mp3"),
     name: "Stress Relief",
     type: "isochronic",
     frequency: "5 Hz",
@@ -168,6 +180,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "night-calm",
+    audioFile: require("@/assets/audio/4hz-isochronic.mp3"),
     name: "Night Calm",
     type: "isochronic",
     frequency: "3 Hz",
@@ -182,6 +195,7 @@ export const audioTracks: AudioTrack[] = [
   // ===== SACRED & HARMONIC FREQUENCIES (5 tracks) =====
   {
     id: "om-resonance",
+    audioFile: require("@/assets/audio/om-drone.mp3"),
     name: "OM Resonance",
     type: "harmonic",
     frequency: "136.1 Hz",
@@ -194,6 +208,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "harmonic-balance",
+    audioFile: require("@/assets/audio/low-harmonic-pad.mp3"),
     name: "Harmonic Balance",
     type: "harmonic",
     frequency: "432 Hz",
@@ -206,6 +221,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "solfeggio-528",
+    audioFile: require("@/assets/audio/low-harmonic-pad.mp3"),
     name: "Solfeggio 528 Hz",
     type: "harmonic",
     frequency: "528 Hz",
@@ -218,6 +234,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "solfeggio-741",
+    audioFile: require("@/assets/audio/low-harmonic-pad.mp3"),
     name: "Solfeggio 741 Hz",
     type: "harmonic",
     frequency: "741 Hz",
@@ -230,6 +247,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "solfeggio-852",
+    audioFile: require("@/assets/audio/low-harmonic-pad.mp3"),
     name: "Solfeggio 852 Hz",
     type: "harmonic",
     frequency: "852 Hz",
@@ -244,6 +262,7 @@ export const audioTracks: AudioTrack[] = [
   // ===== AMBIENT & MASKING SOUNDS (4 tracks) =====
   {
     id: "pink-noise",
+    audioFile: require("@/assets/audio/pink-noise.mp3"),
     name: "Pink Noise",
     type: "ambient",
     frequency: "Broadband",
@@ -256,6 +275,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "brown-noise",
+    audioFile: require("@/assets/audio/brown-noise.mp3"),
     name: "Brown Noise",
     type: "ambient",
     frequency: "Broadband",
@@ -268,6 +288,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "rainfall",
+    audioFile: require("@/assets/audio/rain.mp3"),
     name: "Rainfall",
     type: "ambient",
     frequency: "Natural",
@@ -280,6 +301,7 @@ export const audioTracks: AudioTrack[] = [
   },
   {
     id: "ocean-waves",
+    audioFile: require("@/assets/audio/ocean-waves.mp3"),
     name: "Ocean Waves",
     type: "ambient",
     frequency: "Natural",
