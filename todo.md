@@ -1,450 +1,452 @@
-# Harmonia App - Development TODO
+# Harmonia Professional Rebuild - Master Execution Checklist
 
-## Core Infrastructure
-- [x] Update theme colors (purple/indigo healing palette)
-- [x] Configure app branding (name, icon, splash)
-- [x] Set up tab navigation structure
-- [x] Create icon mappings for all tabs
-- [x] Implement premium/free version logic
+## ⚠️ CRITICAL: Language & Positioning Changes
+**FORBIDDEN WORDS** (must be removed everywhere):
+- ❌ Heal / Healing
+- ❌ Cure
+- ❌ Therapy / Therapeutic
+- ❌ Treat / Treatment
+- ❌ Trauma
+- ❌ Disorder
+- ❌ Diagnose / Diagnosis
+- ❌ Medical
+- ❌ DNA Repair
 
-## Sound Engine
-- [x] Create audio engine context/provider
-- [x] Implement binaural beat generator (architecture)
-- [x] Implement isochronic tone generator (architecture)
-- [x] Implement noise generator (white, pink, brown, purple, blue) (architecture)
-- [x] Implement OM chanting with harmonics (architecture)
-- [x] Add cave reverb effect (architecture)
-- [x] Create audio mixer for layering sounds (architecture)
-- [x] Add volume controls per layer (UI)
-- [x] Implement fade in/out transitions (architecture)
-- [ ] Add audio visualization component
+**APPROVED LANGUAGE** (use instead):
+- ✅ Audio experience
+- ✅ Sound-based
+- ✅ Support focus/relaxation/sleep
+- ✅ Mindfulness
+- ✅ Simulated sound patterns
+- ✅ Designed for / Intended for
 
-## Screens - Core
-- [x] Home/Dashboard screen with quick presets
-- [x] Sound Studio screen with tabbed interface
-- [x] Binaural Beat Creator tab
-- [x] Isochronic Tone Generator tab
-- [x] Noise Generator tab
-- [x] OM Chanting tab
-- [x] Presets Library screen
-- [x] Settings screen
+---
 
-## Screens - Premium
-- [ ] Ambient Sound Amplifier screen
-- [x] Security Camera screen
-- [ ] Bluetooth Manager screen
-- [ ] Premium Upgrade screen
+## Phase 1: Core Product Redefinition
+- [ ] Remove ALL "healing" language from app name, descriptions, UI
+- [ ] Update core promise: "Sound-based experiences designed to support focus, relaxation, and mindful states"
+- [ ] Add explicit disclaimers: "Not medical, therapeutic, diagnostic, or healing"
+- [ ] Rename "DNA Repair 528Hz" → "Solfeggio 528Hz"
+- [ ] Remove trauma/surgery/cancer content (medical claims)
+- [ ] Remove astrology features (out of scope for v1.0)
+- [ ] Remove security camera features (out of scope for v1.0)
 
-## Features - Sound Healing
-- [x] Brainwave state selector (Delta/Theta/Alpha/Beta/Gamma)
-- [x] Frequency sliders with real-time preview
-- [x] Session timer with duration presets
-- [x] Preset saving functionality
-- [x] Preset loading functionality
-- [ ] Background audio playback
-- [ ] Lock screen controls
+---
 
-## Features - Security (Premium)
-- [x] Camera discovery/scanning (UI)
-- [ ] RTSP stream integration
-- [x] Camera grid view
-- [x] Full-screen camera view
-- [x] Recording functionality (UI)
-- [x] Motion detection alerts (UI)
-- [x] Audio monitoring (UI)
+## Phase 2: Navigation Structure Rebuild
+- [ ] Replace current 6-tab navigation with clean 4-tab structure:
+  - Home (Today's Session, Continue Listening)
+  - Explore (Focus, Calm, Sleep categories)
+  - Library (All sounds with filters)
+  - Account (Safety Info, Preferences, Legal)
+- [ ] Remove "Sound Studio" tab (too complex)
+- [ ] Remove "Security" tab (out of scope)
+- [ ] Remove "Favorites" tab (move to Library filter)
+- [ ] Remove "Pricing" tab (move to Account)
 
-## Features - Connectivity
-- [ ] Bluetooth device scanning
-- [ ] Bluetooth pairing
-- [ ] Audio routing to Bluetooth devices
-- [ ] Car/speaker/headphone profiles
+---
 
-## UI Components
-- [x] Frequency slider component
-- [ ] Waveform visualizer component
-- [x] Brainwave state indicator
-- [x] Session timer component
-- [x] Preset card component
-- [x] Camera feed component (placeholder)
-- [ ] Bluetooth device card component
-- [x] Premium badge component
-- [x] Loading/playing animations
+## Phase 3: Audio Content - 21 Professional Tracks
 
-## Data & Storage
-- [x] Preset data model
-- [x] Sound settings data model
-- [x] Camera data model
-- [x] AsyncStorage persistence
-- [x] User preferences storage
+### Binaural Beats (7 tracks) - Headphones Required
+- [ ] 1. Alpha Focus — 10 Hz (calm focus, light productivity)
+- [ ] 2. Deep Focus — 14 Hz (sustained concentration)
+- [ ] 3. Relaxed Awareness — 8 Hz (calm clarity)
+- [ ] 4. Meditative Drift — 6 Hz (meditation, introspection)
+- [ ] 5. Deep Meditation — 4 Hz (stillness, inner calm)
+- [ ] 6. Sleep Descent — 2 Hz (falling asleep)
+- [ ] 7. Deep Sleep — 1 Hz (rest and recovery)
 
-## Polish & UX
-- [x] Haptic feedback integration
-- [x] Smooth animations
-- [x] Dark/light theme support
-- [ ] Accessibility features
-- [x] Error handling
-- [x] Loading states
+### Isochronic Tones (5 tracks) - Headphones Optional
+- [ ] 8. Calm Pulse — 7 Hz (relaxation)
+- [ ] 9. Creative Flow — 9 Hz (creativity, ideation)
+- [ ] 10. Study Pulse — 13 Hz (mental stamina)
+- [ ] 11. Stress Relief — 5 Hz (nervous system calming)
+- [ ] 12. Night Calm — 3 Hz (pre-sleep relaxation)
 
-## About & Branding
-- [x] About the Creator section
-- [x] Creator contact info
-- [x] Inspirational quote
-- [ ] App logo generation
+### Sacred & Harmonic Frequencies (5 tracks)
+- [ ] 13. OM Resonance — 136.1 Hz (grounding, meditation)
+- [ ] 14. Harmonic Balance — 432 Hz (relaxation, listening comfort)
+- [ ] 15. Solfeggio 528 Hz (calm clarity) - RENAMED from "DNA Repair"
+- [ ] 16. Solfeggio 741 Hz (mental clarity)
+- [ ] 17. Solfeggio 852 Hz (stillness)
 
+### Ambient & Masking Sounds (4 tracks)
+- [ ] 18. Pink Noise (focus, sleep)
+- [ ] 19. Brown Noise (deep focus, sleep)
+- [ ] 20. Rainfall (relaxation)
+- [ ] 21. Ocean Waves (calm, rhythmic relaxation)
 
-## Phase 2: Audio Engine Implementation & Testing
-- [ ] Integrate Web Audio API into audio-engine context
-- [ ] Implement real binaural beat generation with frequency verification
-- [ ] Implement real isochronic tone generation with pulse accuracy
-- [ ] Implement all 5 noise colors (white, pink, brown, purple, blue)
-- [ ] Implement OM chanting with 136.1 Hz fundamental + harmonics
-- [ ] Add convolution reverb for cave effect
-- [ ] Test frequency accuracy with FFT analysis
-- [ ] Optimize audio latency (target < 50ms)
-- [ ] Implement audio visualization (frequency spectrum)
-- [ ] Add audio level metering and monitoring
+### Track Metadata (REQUIRED for each track)
+- [ ] Name
+- [ ] Type (binaural / isochronic / ambient / harmonic)
+- [ ] Frequency (if applicable)
+- [ ] Description (neutral, no medical claims)
+- [ ] Recommended duration (10-60 min)
+- [ ] Headphone requirement (boolean)
+- [ ] Category tags (Focus / Calm / Sleep)
+- [ ] "Best For" usage guidance
 
-## Phase 3: Latency & Performance Optimization
-- [ ] Profile audio processing performance
-- [ ] Optimize oscillator creation/destruction
-- [ ] Implement audio buffer pooling
-- [ ] Add background audio playback support
-- [ ] Optimize rendering performance (60fps target)
-- [ ] Implement memory leak detection
-- [ ] Add battery usage optimization
-- [ ] Test on low-end devices
-- [ ] Implement audio ducking for notifications
-- [ ] Add audio focus management
+---
 
-## Phase 4: UI/UX Refinement & Accessibility
-- [ ] Audit all screen transitions for smoothness
-- [ ] Implement haptic feedback for all interactions
-- [ ] Add accessibility labels (VoiceOver/TalkBack)
-- [ ] Implement high contrast mode
-- [ ] Add font size adjustment
-- [ ] Test keyboard navigation
-- [ ] Implement error recovery flows
-- [ ] Add loading state animations
-- [ ] Refine color contrast ratios (WCAG AA)
-- [ ] Add tooltips and help system
+## Phase 4: Safety-First UX Implementation
 
-## Phase 5: Backend Integration
-- [ ] Set up database schema for presets/favorites
-- [ ] Implement user authentication (optional)
-- [ ] Add cloud sync for presets
-- [ ] Implement camera discovery (mDNS/SSDP)
-- [ ] Add RTSP stream handling
-- [ ] Implement secure storage for credentials
-- [ ] Add API error handling and retry logic
-- [ ] Implement offline mode with sync queue
-- [ ] Add analytics and crash reporting
-- [ ] Implement push notifications
+### First-Run Onboarding (3 screens max, skippable)
+- [ ] Screen 1: What Harmonia Is (audio experience, not medical)
+- [ ] Screen 2: How to Use Audio Safely (volume, headphones)
+- [ ] Screen 3: Headphones + Volume Guidance
+- [ ] Add "Skip" button on all onboarding screens
 
-## Phase 6: Bluetooth & Connectivity
-- [ ] Implement Bluetooth device discovery
-- [ ] Add device pairing flow
-- [ ] Implement audio routing to Bluetooth devices
-- [ ] Add device connection state management
-- [ ] Implement reconnection logic
-- [ ] Test with various Bluetooth devices
-- [ ] Add device profiles (car, speaker, headphones)
-- [ ] Implement audio codec selection
-- [ ] Add connection quality monitoring
-- [ ] Test latency over Bluetooth
+### Audio Safety Features
+- [ ] Implement smooth fade-in (3-5 seconds) on all tracks
+- [ ] Implement smooth fade-out (3-5 seconds) on all tracks
+- [ ] Start volume at 50% or lower (never higher)
+- [ ] Show warning modal if volume > 80%
+- [ ] Volume tooltip: "Use a comfortable volume. Louder does not mean more effective."
+- [ ] Never auto-increase volume
+- [ ] No abrupt stops (always fade out)
+- [ ] Loop-safe playback (no clipping or distortion)
 
-## Phase 7: Security Camera Integration
-- [ ] Implement camera discovery (ONVIF/RTSP)
-- [ ] Add camera stream decoding
-- [ ] Implement recording to device storage
-- [ ] Add motion detection algorithm
-- [ ] Implement audio monitoring from cameras
-- [ ] Add stream encryption
-- [ ] Implement credential storage
-- [ ] Add camera permission handling
-- [ ] Test with real cameras
-- [ ] Add stream quality adaptation
+### Headphone Detection (Binaural Only)
+- [ ] Show modal when binaural beat selected:
+  - "For binaural beats, stereo headphones are recommended."
+- [ ] No enforcement (just notice)
+- [ ] Dismissible modal
 
-## Phase 8: Testing & Verification
-- [ ] Create frequency accuracy test suite
-- [ ] Implement FFT analysis for verification
-- [ ] Create speaker check calibration tool
-- [ ] Add latency measurement tools
-- [ ] Implement battery usage profiling
-- [ ] Create end-to-end user flow tests
-- [ ] Add visual regression testing
-- [ ] Implement performance benchmarking
-- [ ] Create audio quality test suite
-- [ ] Add device compatibility matrix
+### Mandatory Session Timers
+- [ ] Add timer options: 10 min, 15 min, 30 min, 60 min
+- [ ] Add "Unlimited" option (premium only, future)
+- [ ] Auto-stop required (no infinite sessions for free users)
+- [ ] Show timer countdown during session
+- [ ] Fade out audio when timer expires
 
-## Phase 9: Documentation & Deployment
-- [ ] Create user manual with screenshots
-- [ ] Write API documentation
-- [ ] Create troubleshooting guide
-- [ ] Add in-app help system
-- [ ] Create video tutorials
-- [ ] Write privacy policy
-- [ ] Create terms of service
-- [ ] Add release notes template
-- [ ] Create developer documentation
-- [ ] Prepare app store listings
+### Universal Safety Footer
+- [ ] Add to all session screens:
+  - "Not intended for medical use. Stop listening if discomfort occurs."
 
-## Critical Quality Gates
-- [ ] All frequencies verified within ±2% accuracy
-- [ ] Audio latency < 50ms on all devices
-- [ ] Zero crashes on core user flows
-- [ ] 95%+ UI test coverage
-- [ ] All accessibility standards met
-- [ ] Battery drain < 5% per hour playback
-- [ ] Offline functionality working
-- [ ] Bluetooth reconnection within 2 seconds
-- [ ] Camera streams at 30fps minimum
-- [ ] App store submission approved
+---
 
+## Phase 5: Legal & Compliance Pages
 
-## Monetization & Payment Integration
+### Required Pages (must exist and be linked)
+- [ ] Privacy Policy (data minimization, no health data)
+- [ ] Terms of Use (no medical claims, liability limits)
+- [ ] Safety Information (volume, headphones, driving warnings)
+- [ ] How Harmonia Works (binaural beats, isochronic tones explained)
 
-### Stripe Integration
-- [ ] Install Stripe SDK for React Native
-- [ ] Create Stripe account and get API keys
-- [ ] Implement subscription payment flow
-- [ ] Implement one-time payment flow (Lifetime unlock)
-- [ ] Implement in-app purchases (IAP)
-- [ ] Add payment success/failure screens
-- [ ] Implement subscription management
-- [ ] Add cancel subscription flow
-- [ ] Implement refund handling
-- [ ] Add payment receipt generation
+### Safety Information Page Content
+- [ ] Always start at low volume
+- [ ] Use headphones for binaural beats
+- [ ] Avoid listening while driving
+- [ ] Stop if you feel discomfort
+- [ ] Not medical advice
+- [ ] Consult healthcare professionals for medical conditions
 
-### Pricing Tiers
-- [ ] Implement Free tier with feature limitations
-- [ ] Implement Premium tier ($9.99/month, $79.99/year)
-- [ ] Implement Ultimate tier ($19.99/month, $149.99/year)
-- [ ] Implement Lifetime unlock ($49.99 one-time)
-- [ ] Create pricing comparison screen
-- [ ] Add "Upgrade" prompts throughout app
-- [ ] Implement 7-day free trial
-- [ ] Add trial expiration handling
+### Data Minimization
+- [ ] No health data collected
+- [ ] No biometric claims
+- [ ] No session analytics tied to identity (unless user opts in)
+- [ ] Minimal data collection (only email if provided)
 
-### In-App Purchases
-- [ ] Gamma Wave Pack ($2.99)
-- [ ] Isochronic Tones ($3.99)
-- [ ] OM Chanting ($4.99)
-- [ ] Noise Color Pack ($2.99)
-- [ ] Preset Bundle ($1.99)
-- [ ] Security Add-on ($9.99)
-- [ ] Remove Ads ($4.99)
+---
 
-### Feature Gating
-- [ ] Lock Beta/Gamma waves for free users
-- [ ] Lock isochronic tones for free users
-- [ ] Lock OM chanting for free users
-- [ ] Lock custom presets for free users
-- [ ] Lock security features for free users
-- [ ] Add 10-minute session limit for free users
-- [ ] Show ads for free users (non-intrusive)
-- [ ] Implement feature unlock logic
+## Phase 6: Payment-Agnostic Monetization
 
-### Subscription Management
-- [ ] Create user subscription database schema
-- [ ] Implement subscription status checking
-- [ ] Add subscription renewal handling
-- [ ] Implement subscription upgrade/downgrade
-- [ ] Add subscription cancellation
-- [ ] Implement grace period for failed payments
-- [ ] Add subscription restoration (for reinstalls)
-- [ ] Create admin dashboard for subscriptions
+### Remove Stripe Integration
+- [ ] Remove all Stripe SDK imports
+- [ ] Remove payment processing code
+- [ ] Remove subscription management code
+- [ ] Remove IAP (in-app purchase) code
 
-### Analytics & Tracking
-- [ ] Track free-to-paid conversion rate
-- [ ] Track subscription churn rate
-- [ ] Track IAP purchase rate
-- [ ] Track feature usage by tier
-- [ ] Track trial-to-paid conversion
-- [ ] Implement revenue analytics dashboard
-- [ ] Add cohort analysis
-- [ ] Track LTV (Lifetime Value)
+### Feature Gating (WITHOUT PAYMENTS)
+- [ ] Implement feature flags:
+  - `max_session_length = 15` (free tier)
+  - `premium_features = false`
+- [ ] Free tier limits:
+  - 15-minute session limit
+  - All sounds accessible (no content gating)
+  - Basic presets only
+- [ ] Premium features (future):
+  - Unlimited session length
+  - Offline playback
+  - Custom presets
+  - Extended sleep mode
 
-### Google Play Integration
-- [ ] Set up Google Play Console
-- [ ] Configure in-app billing
-- [ ] Add subscription products
-- [ ] Add one-time purchase products
-- [ ] Test payment flow in sandbox
-- [ ] Implement Play Store receipt validation
-- [ ] Add Play Store subscription management link
+### "Unlock" UI (No Checkout)
+- [ ] Replace "Subscribe" buttons with "Unlock Full Access"
+- [ ] "Unlock" buttons open info modal (not checkout)
+- [ ] Modal copy: "Coming Soon - Extended sessions and premium features launching soon. Join the waitlist to be notified."
+- [ ] No payment processing (just informational)
 
-### Website Stripe Integration
-- [ ] Add Stripe checkout to website
-- [ ] Create subscription management portal
-- [ ] Sync website subscriptions with mobile app
-- [ ] Add payment method management
-- [ ] Implement invoice generation
-- [ ] Add billing history page
+### Founding Listener Narrative
+- [ ] Add "Founding Listener" messaging throughout app
+- [ ] Copy: "You're using Harmonia in its early phase. Founding listeners will receive lifetime perks when premium launches."
+- [ ] Show "Founding Listener" badge in Account screen
+- [ ] Create sense of exclusivity and early access
 
+### Email Capture (Low Pressure)
+- [ ] Only ask after first completed session
+- [ ] Modal copy: "Want extended sessions when Harmonia unlocks premium? Get notified."
+- [ ] Checkbox consent required
+- [ ] Optional (can be dismissed)
+- [ ] Store email locally (no server sync yet)
 
-## Build Fixes & Testing
+### Entitlement System (Future-Proof)
+- [ ] Define entitlements in code (even if unused):
+  - `unlimited_sessions`
+  - `offline_playback`
+  - `custom_presets`
+  - `sleep_mode_extended`
+- [ ] Implement toggle-ready design (when payments unlock, entitlements flip)
 
-### Android Build Issues
-- [x] Fix Android SDK version mismatch (requires SDK 24, has SDK 22)
-- [x] Update expo-modules-core configuration
-- [x] Verify all native dependencies are compatible
-- [ ] Test Android build process
-- [ ] Fix any Gradle configuration errors
+---
 
-### Comprehensive Testing Checklist
-- [ ] Verify dev server starts without errors
-- [ ] Test all tab navigation (Home, Studio, Presets, Pricing, Security, Settings)
-- [ ] Test audio engine initialization
-- [ ] Test binaural beat generation
-- [ ] Test isochronic tone generation
-- [ ] Test noise generator (all colors)
-- [ ] Test OM chanting
-- [ ] Test preset saving and loading
-- [ ] Test subscription tier checking
-- [ ] Test feature gating (free vs premium)
-- [ ] Test pricing screen display
-- [ ] Test payment flow (simulated)
-- [ ] Test data persistence (AsyncStorage)
-- [ ] Verify all frequencies are accurate
-- [ ] Test session timer
-- [ ] Test volume controls
-- [ ] Verify no placeholder/mock data in production code
-- [ ] Test error handling
-- [ ] Verify all buttons are functional
-- [ ] Test responsive layout on different screen sizes
+## Phase 7: Home Screen Redesign
 
-### Data Integrity Validation
-- [x] Verify frequency values are not manipulated
-- [x] Verify pricing values match market analysis
-- [x] Verify subscription tiers are correctly configured
-- [x] Verify feature flags are properly set
-- [x] Verify no hardcoded test data in production
-- [x] Verify API endpoints are correct
-- [x] Verify Stripe price IDs match products
-- [x] Verify database schema is correct
+### Today's Session (Rotating)
+- [ ] Show one featured session per day
+- [ ] Rotate automatically (daily)
+- [ ] Copy: "Today's Free Session: Deep Focus (25 min)"
+- [ ] Single CTA: "Start Session"
 
+### Continue Listening
+- [ ] Show if session was interrupted
+- [ ] Resume from last position
+- [ ] Show session name, time remaining
 
-## New Feature Enhancements (2026-01-07)
+### No Clutter
+- [ ] Remove complex UI elements
+- [ ] Remove long text blocks
+- [ ] Single primary action per screen
+- [ ] Clean, minimal design
 
-### Bluetooth Integration
-- [ ] Install expo-bluetooth package
-- [ ] Create Bluetooth manager service
-- [ ] Implement device scanning
-- [ ] Implement device pairing
-- [ ] Implement audio routing to Bluetooth devices
-- [ ] Add Bluetooth device selector UI
-- [ ] Test with car audio systems
-- [ ] Test with Bluetooth speakers
-- [ ] Test with Bluetooth headphones
-- [ ] Handle Bluetooth disconnection gracefully
+---
 
-### Background Audio Playback
-- [ ] Configure expo-audio for background playback
-- [ ] Implement audio session management
-- [ ] Add lock screen controls (play/pause, skip)
-- [ ] Add notification with playback controls
-- [ ] Ensure audio continues when screen locks
-- [ ] Test battery impact of background playback
-- [ ] Add "keep screen awake" option for active sessions
+## Phase 8: Explore Screen Redesign
 
-### 10-Day Free Trial System
-- [ ] Update subscription model to include 10-day trial
-- [ ] Implement trial tracking (start date, days remaining)
-- [ ] Add trial countdown UI
-- [ ] Show trial status in settings
-- [ ] Add "Upgrade Now" prompts during trial
-- [ ] Implement trial expiration logic
-- [ ] Add grace period after trial ends
-- [ ] Update Stripe integration for trial periods
+### Three Subsections Only
+- [ ] Focus (3-6 curated sessions)
+- [ ] Calm (3-6 curated sessions)
+- [ ] Sleep (3-6 curated sessions)
 
-### Session Intent Selector
-- [ ] Create session intent selection screen (first launch)
-- [ ] Add intent categories (healing, meditation, focus, sleep, etc.)
-- [ ] Implement "What do you want from this session?" quick selector
-- [ ] Save user's session history
-- [ ] Recommend presets based on intent
-- [ ] Add intent-based analytics
+### Session Cards
+- [ ] Short descriptions (1-2 sentences)
+- [ ] Preset timers (10/15/30 min)
+- [ ] "Best For" tags
+- [ ] Play button (no complex controls)
 
-### Guided Meditations for Astral Projection
-- [ ] Write astral projection meditation scripts
-- [ ] Record or generate guided audio
-- [ ] Create meditation player UI
-- [ ] Add meditation library screen
-- [ ] Implement meditation categories (beginner, intermediate, advanced)
-- [ ] Add meditation progress tracking
-- [ ] Create meditation timer with intervals
-- [ ] Add background binaural beats during meditation
+### Prevents Decision Fatigue
+- [ ] Curated selection (not full library)
+- [ ] Clear categorization
+- [ ] Simple choices
+
+---
+
+## Phase 9: Library Screen Redesign
+
+### Filters
+- [ ] Type: Binaural, Isochronic, Ambient, Harmonic
+- [ ] Duration: 10 min, 15 min, 30 min, 60 min
+- [ ] Frequency band: Delta, Theta, Alpha, Beta, Gamma (optional)
+- [ ] Favorites toggle
+
+### Sorting
+- [ ] Default: Recommended
+- [ ] Optional: Alphabetical, Duration, Frequency
+
+### All 21 Tracks Visible
+- [ ] Grid or list view
+- [ ] Search functionality
+- [ ] Clear metadata for each track
+
+---
+
+## Phase 10: Account Screen Redesign
+
+### Must Include
+- [ ] Safety Information (link to page)
+- [ ] How Harmonia Works (link to page)
+- [ ] Preferences:
+  - Volume fade duration (3/5/7 seconds)
+  - Default timer (10/15/30 min)
+- [ ] Email capture (optional)
+- [ ] Legal links (Privacy, Terms, Safety)
+- [ ] "Founding Listener" status badge
+- [ ] App version number
+
+---
+
+## Phase 11: Remove Out-of-Scope Features
+
+### Security Camera Features (REMOVE)
+- [ ] Remove camera discovery/scanning
+- [ ] Remove RTSP stream integration
+- [ ] Remove camera grid view
+- [ ] Remove recording functionality
+- [ ] Remove motion detection
+- [ ] Remove audio monitoring
+- [ ] Remove Security tab
+
+### Astrological Features (REMOVE)
+- [ ] Remove Human Design chart
+- [ ] Remove Natal Chart
+- [ ] Remove Zodiac backgrounds
+- [ ] Remove Chinese Zodiac backgrounds
+- [ ] Remove astrological profile screen
+
+### Overly Complex Features (REMOVE)
+- [ ] Remove AI chat
+- [ ] Remove health tracking
+- [ ] Remove personalized "diagnosis"
+- [ ] Remove social features
+- [ ] Remove complex visualizations (keep simple waveforms)
+
+---
+
+## Phase 12: Landing Page Rebuild
+
+### Hero Section
+- [ ] Update headline: "Sound-Based Experiences for Focus, Relaxation, and Mindful States"
+- [ ] Remove "healing" language
+- [ ] Add safety disclaimer
+- [ ] Single CTA: "Download Now" or "Join Waitlist"
+
+### Menu Structure
+- [ ] Home
+- [ ] Sounds (submenu):
+  - Binaural Beats
+  - Isochronic Tones
+  - Sacred Frequencies
+  - Ambient Sounds
+- [ ] Sessions (submenu):
+  - Meditation
+  - Sleep
+  - Focus
+  - Deep Work
+- [ ] About / Biography
+- [ ] Safety & Usage
+- [ ] Contact / Support
 
 ### Educational Content
-- [ ] Write "Why These Sounds Work" article
-- [ ] Create trauma healing guide
-- [ ] Create surgery recovery guide
-- [ ] Create cancer support guide
-- [ ] Create self-enlightenment guide
-- [ ] Create telomere lengthening explanation
-- [ ] Create awareness enhancement guide
-- [ ] Add educational content screen
-- [ ] Add in-app learning modules
-- [ ] Create video tutorials (optional)
+- [ ] "What are binaural beats?" (short article)
+- [ ] "How do isochronic tones differ?" (short article)
+- [ ] "Best frequencies for sleep / focus" (short article)
+- [ ] "How to listen safely" (short article)
 
-### Vibrational Stage Techniques
-- [ ] Write vibrational stage guide
-- [ ] Create technique library (rope technique, roll-out, etc.)
-- [ ] Add step-by-step instructions
-- [ ] Create visualization exercises
-- [ ] Add progress tracking for techniques
-- [ ] Implement technique reminders
-- [ ] Add community tips section
+### Footer
+- [ ] Privacy Policy
+- [ ] Terms of Use
+- [ ] Safety Information
+- [ ] Health & Safety Disclaimer
+- [ ] Creator contact info
 
-### Astrological Features (One-Time Purchases)
-- [ ] Design astrological banner system
-- [ ] Create Human Design chart generator
-- [ ] Create Natal Chart generator
-- [ ] Create Zodiac Sign backgrounds (12 signs)
-- [ ] Create Chinese Zodiac backgrounds (12 animals)
-- [ ] Implement banner customization UI
-- [ ] Add astrological profile screen
-- [ ] Integrate with birth date/time input
-- [ ] Create one-time purchase flow for each feature
-- [ ] Price: $4.99 per astrological feature
+---
 
-### Free Tier Updates
-- [ ] Update session limit: 15 minutes (was 10 minutes)
-- [ ] Update isochronic tone limit: 5 minutes
-- [ ] Update binaural beat limit: 5 minutes
-- [ ] Add session timer with warnings at 1 min remaining
-- [ ] Show "Upgrade for unlimited" prompt at limit
-- [ ] Track daily usage statistics
+## Phase 13: Performance & Stability
 
-### Hemi-Sync Integration (Unlabeled)
-- [ ] Implement hemispheric synchronization algorithm
-- [ ] Add carrier frequency + beat frequency logic
-- [ ] Create "Brain Sync" preset category (don't mention Hemi-Sync)
-- [ ] Add "Whole Brain" mode
-- [ ] Test frequency accuracy for brain synchronization
+### Offline Handling
+- [ ] Allow playback of cached sounds
+- [ ] Disable streaming gracefully
+- [ ] No crashes when offline
 
-### Binaural Beats Maker
-- [ ] Create custom binaural beat builder UI
-- [ ] Add carrier frequency slider (100-500 Hz)
-- [ ] Add beat frequency slider (0.5-40 Hz)
-- [ ] Add preset save functionality
-- [ ] Add frequency presets (Delta, Theta, Alpha, Beta, Gamma)
-- [ ] Show real-time frequency display
-- [ ] Add stereo test (left/right channel verification)
+### Error States
+- [ ] Show calm messages (never raw errors)
+- [ ] Never blame user
+- [ ] Example: "This session couldn't start right now. Please try again."
 
-### Isochronic Tone Creator
-- [ ] Create custom isochronic tone builder UI
-- [ ] Add frequency slider (0.5-40 Hz)
-- [ ] Add pulse duration control
-- [ ] Add duty cycle control (25%, 50%, 75%)
-- [ ] Add waveform selector (sine, square, triangle)
-- [ ] Add preset save functionality
-- [ ] Show real-time waveform visualization
+### Audio Quality
+- [ ] Sample rate: 44.1 kHz
+- [ ] Bit depth: 16-bit
+- [ ] Channels: Stereo (2)
+- [ ] No clipping or distortion
+- [ ] Frequency accuracy: ±2% tolerance
 
-### Session Onboarding
-- [ ] Create "Quick Start" flow on app launch
-- [ ] Add "What's your goal today?" selector
-- [ ] Options: Healing, Meditation, Focus, Sleep, Energy, Astral Projection
-- [ ] Auto-recommend preset based on goal
-- [ ] Add "Skip" option for advanced users
-- [ ] Remember last session goal
+---
+
+## Phase 14: Analytics (Safe Only)
+
+### Allowed Metrics
+- [ ] Session started
+- [ ] Session completed
+- [ ] Duration used
+- [ ] Category selected (Focus/Calm/Sleep)
+- [ ] Track played
+
+### Forbidden Metrics
+- [ ] Emotional inference
+- [ ] Mental state tagging
+- [ ] Health conclusions
+- [ ] Biometric data
+
+---
+
+## Phase 15: Testing & QA
+
+### QA Pass 1 - Functional
+- [ ] All sounds play correctly
+- [ ] All timers stop correctly
+- [ ] No crashes on any screen
+- [ ] No audio clipping or distortion
+- [ ] Fade-in/fade-out works smoothly
+- [ ] Volume warning appears at >80%
+- [ ] Headphone modal appears for binaural beats
+
+### QA Pass 2 - Language
+- [ ] No forbidden claims anywhere
+- [ ] Consistent tone throughout
+- [ ] Safety information visible
+- [ ] All disclaimers present
+- [ ] No medical/therapeutic language
+
+### QA Pass 3 - UX
+- [ ] First-time user understands in <30 seconds
+- [ ] No dead buttons or broken links
+- [ ] No confusion about what's free vs premium
+- [ ] Onboarding can be skipped
+- [ ] All navigation flows work
+- [ ] No orphaned tracks (all categorized)
+
+---
+
+## Phase 16: Final Deployment
+
+### App Store Preparation
+- [ ] Update app description (no medical claims)
+- [ ] Generate new screenshots
+- [ ] Update keywords (focus, relaxation, meditation, mindfulness)
+- [ ] Add safety disclaimer to app store listing
+- [ ] Submit for review
+
+### Landing Page Deployment
+- [ ] Deploy updated landing page
+- [ ] Test all links
+- [ ] Verify SEO meta tags
+- [ ] Test on mobile/desktop
+- [ ] Monitor analytics
+
+### Documentation
+- [ ] Update README
+- [ ] Create deployment guide
+- [ ] Update legal documents
+- [ ] Create user manual
+
+---
+
+## ✅ Success Criteria
+
+- [ ] Zero medical/therapeutic claims anywhere
+- [ ] All 21 tracks implemented with proper metadata
+- [ ] Safety-first UX (volume warnings, fade-in/out, timers)
+- [ ] Clean 4-tab navigation (Home, Explore, Library, Account)
+- [ ] Payment-agnostic monetization (no Stripe, just "Unlock" modals)
+- [ ] Founding Listener narrative implemented
+- [ ] Email capture working (low pressure)
+- [ ] All legal pages complete
+- [ ] App store safe language throughout
+- [ ] First-time user can start session in <30 seconds
+- [ ] Zero crashes on core flows
+- [ ] Professional, calm, trustworthy feel
+
+---
+
+**This is the professional rebuild. Execute faithfully for a clean, defensible, monetization-ready product.**

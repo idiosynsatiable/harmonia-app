@@ -12,7 +12,7 @@ const schemeFromBundleId = `manus${timestamp}`;
 
 const env = {
   // App branding - update these values directly (do not use env vars)
-  appName: "Harmonia",
+  appName: "Harmonia - Sound & Mindfulness",
   appSlug: "harmonia_healing_app",
   // S3 URL of the app logo - set this to the URL returned by generate_image when creating custom logo
   // Leave empty to use the default icon from assets/images/icon.png
@@ -23,7 +23,7 @@ const env = {
 };
 
 const config: ExpoConfig = {
-  name: env.appName,
+  name: "Harmonia",
   slug: env.appSlug,
   version: "1.0.4",
   orientation: "portrait",
