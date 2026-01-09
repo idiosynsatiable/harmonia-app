@@ -9,7 +9,7 @@ import { Platform } from "react-native";
 import "@/lib/_core/nativewind-pressable";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { AudioEngineProvider } from "@/lib/audio-engine";
-import { StripeProviderWrapper } from "@/lib/stripe-provider";
+// Stripe provider removed - will be added back after build fixes
 import { PremiumProvider } from "@/lib/premium-context";
 import { BluetoothProvider } from "@/lib/bluetooth-manager";
 import { BackgroundAudioProvider } from "@/lib/background-audio-manager";
@@ -85,8 +85,7 @@ export default function RootLayout() {
 
   const content = (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StripeProviderWrapper>
-        <PremiumProvider>
+      <PremiumProvider>
           <AudioEngineProvider>
             <BluetoothProvider>
               <BackgroundAudioProvider>
@@ -106,7 +105,6 @@ export default function RootLayout() {
             </BluetoothProvider>
           </AudioEngineProvider>
         </PremiumProvider>
-      </StripeProviderWrapper>
     </GestureHandlerRootView>
   );
 

@@ -1,6 +1,23 @@
 import { ScrollView, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { ScreenContainer } from '@/components/screen-container';
-import { useStripe, PRICING_PLANS, IN_APP_PURCHASES } from '@/lib/stripe-provider';
+// Stripe provider temporarily removed - using mock data
+const PRICING_PLANS = [
+  { id: 'free', name: 'Free', price: 0, features: ['15-min sessions', 'Basic frequencies', '5 presets'] },
+  { id: 'premium', name: 'Premium', price: 9.99, features: ['Unlimited sessions', 'All frequencies', 'Isochronic tones', 'OM chanting'], popular: true },
+  { id: 'ultimate', name: 'Ultimate', price: 19.99, features: ['All Premium', 'Security cameras', 'Advanced analytics', 'Priority support'] },
+  { id: 'lifetime', name: 'Lifetime', price: 49.99, features: ['All features forever', 'No subscription', 'Lifetime updates'] },
+];
+const IN_APP_PURCHASES = [
+  { id: 'human-design', name: 'Human Design', description: 'Personal design chart', price: 4.99, features: ['Your design chart', 'Personalized guidance'] },
+  { id: 'natal-chart', name: 'Natal Chart', description: 'Birth chart analysis', price: 4.99, features: ['Full natal chart', 'Interpretations'] },
+  { id: 'zodiac', name: 'Zodiac Backgrounds', description: 'Zodiac themed UI', price: 2.99, features: ['12 zodiac themes', 'Custom backgrounds'] },
+];
+const useStripe = () => ({
+  subscription: { tier: 'free' },
+  hasFeature: (id: string) => false,
+  subscribe: async (planId: string) => false,
+  purchase: async (itemId: string) => false,
+});
 import { useState } from 'react';
 
 export default function PricingScreen() {
@@ -44,8 +61,7 @@ export default function PricingScreen() {
           {subscription.tier !== 'free' && (
             <View className="mt-4 p-4 bg-success/10 rounded-lg">
               <Text className="text-success font-semibold">
-                ✓ Current Plan: {PRICING_PLANS.find(p => p.id === subscription.tier)?.name}
-              </Text>
+                ✓ Curre          {PRICING_PLANS.find((p: any) => p.id === subscription.tier)?.name}              </Text>
             </View>
           )}
         </View>
@@ -54,7 +70,7 @@ export default function PricingScreen() {
         <View className="p-6">
           <Text className="text-xl font-bold text-foreground mb-4">Subscription Plans</Text>
           
-          {PRICING_PLANS.map((plan) => {
+          {PRICING_PLANS.map((plan: any) => {
             const isCurrentPlan = subscription.tier === plan.id;
             const isPremium = plan.id.includes('premium');
             const isUltimate = plan.id.includes('ultimate');
@@ -97,7 +113,7 @@ export default function PricingScreen() {
 
                 {/* Features */}
                 <View className="mb-4">
-                  {plan.features.map((feature, idx) => (
+                  {plan.features.map((feature: string, idx: number) => (
                     <View key={idx} className="flex-row items-start mb-2">
                       <Text className="text-success mr-2">✓</Text>
                       <Text className="text-foreground flex-1">{feature}</Text>
@@ -135,7 +151,7 @@ export default function PricingScreen() {
             Unlock individual features without a subscription
           </Text>
 
-          {IN_APP_PURCHASES.map((item) => {
+          {IN_APP_PURCHASES.map((item: any) => {
             const isPurchased = hasFeature(item.id);
             
             return (
@@ -155,7 +171,7 @@ export default function PricingScreen() {
 
                 {/* Features */}
                 <View className="mb-3">
-                  {item.features.map((feature, idx) => (
+                  {item.features.map((feature: string, idx: number) => (
                     <Text key={idx} className="text-xs text-muted">
                       • {feature}
                     </Text>
