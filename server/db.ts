@@ -89,4 +89,122 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Subscription management functions
+
+import { and, desc } from "drizzle-orm";
+import { subscriptions, type InsertSubscription, type Subscription } from "../drizzle/schema";
+
+/**
+ * Get user's active subscription
+ */
+export async function getUserSubscription(userId: number): Promise<Subscription | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const results = await db
+    .select()
+    .from(subscriptions)
+    .where(
+      and(
+        eq(subscriptions.userId, userId),
+        eq(subscriptions.status, "active")
+      )
+    )
+    .orderBy(desc(subscriptions.createdAt))
+    .limit(1);
+
+  return results[0] || null;
+}
+
+/**
+ * Get all user subscriptions (including inactive)
+ */
+export async function getUserSubscriptions(userId: number): Promise<Subscription[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select()
+    .from(subscriptions)
+    .where(eq(subscriptions.userId, userId))
+    .orderBy(desc(subscriptions.createdAt));
+}
+
+/**
+ * Create a new subscription
+ */
+export async function createSubscription(data: InsertSubscription): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(subscriptions).values(data);
+  return Number((result as any).insertId || 0);
+}
+
+/**
+ * Update subscription by Stripe subscription ID
+ */
+export async function updateSubscriptionByStripeId(
+  stripeSubscriptionId: string,
+  data: Partial<InsertSubscription>
+): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(subscriptions)
+    .set({ ...data, updatedAt: new Date() })
+    .where(eq(subscriptions.stripeSubscriptionId, stripeSubscriptionId));
+}
+
+/**
+ * Update subscription by ID
+ */
+export async function updateSubscription(
+  id: number,
+  data: Partial<InsertSubscription>
+): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(subscriptions)
+    .set({ ...data, updatedAt: new Date() })
+    .where(eq(subscriptions.id, id));
+}
+
+/**
+ * Cancel subscription
+ */
+export async function cancelUserSubscription(id: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(subscriptions)
+    .set({
+      status: "canceled",
+      canceledAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .where(eq(subscriptions.id, id));
+}
+
+/**
+ * Get subscription by Stripe customer ID
+ */
+export async function getSubscriptionByCustomerId(
+  stripeCustomerId: string
+): Promise<Subscription | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const results = await db
+    .select()
+    .from(subscriptions)
+    .where(eq(subscriptions.stripeCustomerId, stripeCustomerId))
+    .orderBy(desc(subscriptions.createdAt))
+    .limit(1);
+
+  return results[0] || null;
+}

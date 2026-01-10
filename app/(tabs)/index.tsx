@@ -1,4 +1,5 @@
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import { ScreenContainer } from "@/components/screen-container";
 import { useColors } from "@/hooks/use-colors";
 import { useState } from "react";
@@ -30,10 +31,7 @@ export default function LibraryScreen() {
       key={track.id}
       className="bg-surface rounded-xl p-4 mb-3 border border-border active:opacity-70"
       style={{ borderColor: colors.border }}
-      onPress={() => {
-        // TODO: Navigate to session player
-        console.log("Play track:", track.name);
-      }}
+      onPress={() => router.push(`/player/${track.id}`)}
     >
       <View className="flex-row items-center justify-between mb-2">
         <View className="flex-1">

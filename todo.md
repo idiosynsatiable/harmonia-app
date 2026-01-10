@@ -49,3 +49,23 @@
 - [x] Test navigation structure
 - [x] Test on iOS/Android
 - [x] Final checkpoint
+
+## F. Mobile App Playback UI
+- [x] Add playback UI to track cards (currently tracks listed but don't play)
+- [x] Integrate use-audio-playback hook with Listen screen
+- [ ] Test audio playback on device
+- [ ] Verify 15-minute timer works
+- [ ] Verify fade-in/fade-out works
+
+## G. Backend Payment Testing
+- [x] Test Stripe payment endpoints (getPricingTiers, createCheckout)
+- [x] Verify webhook handling
+- [x] Test subscription cancellation
+- [x] Verify graceful failures if Stripe unreachable
+
+## H. Landing Page Fixes
+- [x] Fix Terms: Add automation carve-out clause
+- [x] Fix Privacy: Clarify "No Hidden Tracking" vs "Usage Data"
+- [x] Fix contact email consistency (use domain email or keep Gmail)
+- [x] Fix copyright year (2024 vs 2026 mismatch)
+- [x] Verify all legal pages have consistent dates
