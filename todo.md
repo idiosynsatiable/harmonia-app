@@ -69,3 +69,13 @@
 - [x] Fix contact email consistency (use domain email or keep Gmail)
 - [x] Fix copyright year (2024 vs 2026 mismatch)
 - [x] Verify all legal pages have consistent dates
+
+## I. Railway Backend Deployment
+- [x] Verify backend server configuration
+- [x] Create Railway deployment guide
+- [x] Document required environment variables
+- [x] Test backend server locally
+- [x] Provide Railway setup instructions
+- [ ] User: Deploy to Railway (follow RAILWAY_DEPLOYMENT.md)
+- [ ] User: Configure database connection
+- [ ] User: Set up Stripe webhook endpoint
