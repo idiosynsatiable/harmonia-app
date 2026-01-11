@@ -81,3 +81,13 @@
 - [ ] User: Follow STEP_2_RAILWAY_DEPLOY.md (deploy backend)
 - [ ] User: Follow STEP_3_WEBHOOK_SETUP.md (configure webhook)
 - [ ] User: Follow STEP_4_TESTING_GUIDE.md (verify deployment)
+
+## J. Railway CLI Deployment (Automated)
+- [x] Install Railway CLI (sandbox limitations encountered)
+- [x] Created deployment helper script (deploy_railway.py)
+- [x] Created CLI troubleshooting guide (RAILWAY_CLI_SETUP.md)
+- [ ] User: Choose deployment method (A, B, or C)
+- [ ] User: Follow chosen method to deploy
+- [ ] User: Configure environment variables
+- [ ] User: Run database migration
+- [ ] User: Verify deployment

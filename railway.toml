@@ -1,0 +1,17 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "pnpm install && pnpm build"
+
+[deploy]
+startCommand = "pnpm start"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+healthcheckPath = "/health"
+healthcheckTimeout = 100
+
+[env]
+NODE_ENV = "production"
+STRIPE_RESTRICTED_KEY = "rk_test_51SnmsTFozjrVx2iiQGujk1ZfzsvculwrrPF4YLD2syeZSIPghvFdb1JfpcWYbADIuShnU7OJLDF8dyT6xy1Ve4od00fV5eSTxZ"
+STRIPE_PRICE_PREMIUM = "price_1SoH86FozjrVx2iiJPMVuzKZ"
+STRIPE_PRICE_ULTIMATE = "price_1SoH99FozjrVx2iiScEnkUNz"
+STRIPE_PRICE_LIFETIME = "price_1SoHABFozjrVx2iinUERwRJ7"
