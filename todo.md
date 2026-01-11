@@ -86,8 +86,13 @@
 - [x] Install Railway CLI (sandbox limitations encountered)
 - [x] Created deployment helper script (deploy_railway.py)
 - [x] Created CLI troubleshooting guide (RAILWAY_CLI_SETUP.md)
-- [ ] User: Choose deployment method (A, B, or C)
-- [ ] User: Follow chosen method to deploy
-- [ ] User: Configure environment variables
-- [ ] User: Run database migration
-- [ ] User: Verify deployment
+- [x] Retrieved Stripe Price IDs from API
+- [x] Created railway.toml with all environment variables
+- [x] Created railway.json configuration
+- [x] Created DEPLOY_NOW.md (simple 3-step guide)
+- [x] Committed all files to git
+- [ ] User: Download project or push to GitHub
+- [ ] User: Deploy to Railway (railway.app/new)
+- [ ] User: Add PostgreSQL database
+- [ ] User: Run database migration (pnpm db:push)
+- [ ] User: Configure Stripe webhook
