@@ -76,6 +76,8 @@
 - [x] Document required environment variables
 - [x] Test backend server locally
 - [x] Provide Railway setup instructions
-- [ ] User: Deploy to Railway (follow RAILWAY_DEPLOYMENT.md)
-- [ ] User: Configure database connection
-- [ ] User: Set up Stripe webhook endpoint
+- [x] Create step-by-step guides (STEP_1, STEP_2, STEP_3, STEP_4)
+- [ ] User: Follow STEP_1_STRIPE_SETUP.md (create products, get Price IDs)
+- [ ] User: Follow STEP_2_RAILWAY_DEPLOY.md (deploy backend)
+- [ ] User: Follow STEP_3_WEBHOOK_SETUP.md (configure webhook)
+- [ ] User: Follow STEP_4_TESTING_GUIDE.md (verify deployment)
