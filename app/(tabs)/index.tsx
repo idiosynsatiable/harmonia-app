@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
 import { router } from "expo-router";
 import { ScreenContainer } from "@/components/screen-container";
 import { useColors } from "@/hooks/use-colors";
@@ -90,6 +90,17 @@ export default function LibraryScreen() {
     <ScreenContainer className="p-6">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View className="flex-1 gap-4">
+          {/* Logo Header */}
+          <View className="items-center mb-6 pt-4">
+            <Image
+              source={require("@/assets/images/harmonia-logo.png")}
+              style={{ width: 120, height: 120 }}
+              resizeMode="contain"
+            />
+            <Text className="text-2xl font-bold text-foreground mt-4">Harmonia</Text>
+            <Text className="text-sm text-muted mt-1">Sound experiences for focus, calm & mindfulness</Text>
+          </View>
+
           {/* Header */}
           <View className="mt-4">
             <Text className="text-3xl font-bold text-foreground">Library</Text>
