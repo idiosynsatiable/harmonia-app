@@ -3,7 +3,7 @@
  * 
  * Minimal playback engine with:
  * - Play/pause controls
- * - Volume control
+ * - Volume control with anti-clipping normalization
  * - 15-minute timer (free tier cap)
  * - Fade-in/fade-out
  * - Background playback
@@ -22,6 +22,24 @@ export interface PlaybackState {
   volume: number; // 0-1
   remainingTime: number; // seconds (for free tier timer)
 }
+
+/**
+ * Volume normalization with anti-clipping
+ * Prevents distortion by using logarithmic scaling
+ * and clamping at safe levels
+ */
+const normalizeVolume = (rawVolume: number): number => {
+  // Clamp to 0-1
+  const clamped = Math.max(0, Math.min(1, rawVolume));
+  
+  // Use logarithmic scaling for smoother volume curve
+  // This prevents harsh jumps at high volumes
+  const logarithmic = Math.log10(clamped * 9 + 1) / Math.log10(10);
+  
+  // Cap at 0.95 to prevent clipping
+  // This leaves headroom for any audio peaks
+  return Math.min(0.95, logarithmic);
+};
 
 export function useAudioPlayback() {
   const player = useAudioPlayer(null);
@@ -112,7 +130,8 @@ export function useAudioPlayback() {
         targetVolumeRef.current,
         currentVolumeRef.current + volumeIncrement
       );
-      player.volume = currentVolumeRef.current;
+      // Apply normalization to prevent clipping during fade
+      player.volume = normalizeVolume(currentVolumeRef.current);
       currentStep++;
     }, stepDuration);
   };
@@ -143,7 +162,7 @@ export function useAudioPlayback() {
         }
         
         currentVolumeRef.current = Math.max(0, currentVolumeRef.current - volumeDecrement);
-        player.volume = currentVolumeRef.current;
+        player.volume = normalizeVolume(currentVolumeRef.current);
         currentStep++;
       }, stepDuration);
     });
@@ -166,8 +185,9 @@ export function useAudioPlayback() {
       setSessionStartTime(Date.now());
       setRemainingTime(sessionDurationSeconds);
 
-      // Set volume
-      targetVolumeRef.current = initialVolume;
+      // Set volume with normalization
+      const normalizedVolume = normalizeVolume(initialVolume);
+      targetVolumeRef.current = normalizedVolume;
       currentVolumeRef.current = 0;
       setVolumeState(initialVolume);
 
@@ -221,17 +241,19 @@ export function useAudioPlayback() {
   };
 
   /**
-   * Set volume (0-1)
+   * Set volume (0-1) with anti-clipping normalization
    */
   const setVolume = (newVolume: number) => {
     const clampedVolume = Math.max(0, Math.min(1, newVolume));
-    targetVolumeRef.current = clampedVolume;
+    const normalizedVolume = normalizeVolume(clampedVolume);
+    
+    targetVolumeRef.current = normalizedVolume;
     setVolumeState(clampedVolume);
     
-    // If not fading, set volume immediately
+    // If not fading, set volume immediately with normalization
     if (!fadeIntervalRef.current) {
-      currentVolumeRef.current = clampedVolume;
-      player.volume = clampedVolume;
+      currentVolumeRef.current = normalizedVolume;
+      player.volume = normalizedVolume;
     }
   };
 

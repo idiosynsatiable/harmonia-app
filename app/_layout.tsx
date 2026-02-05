@@ -97,6 +97,8 @@ export default function RootLayout() {
                       <Stack.Screen name="(tabs)" />
                       <Stack.Screen name="oauth/callback" />
                       <Stack.Screen name="onboarding/session-intent" />
+                      <Stack.Screen name="safety-info" />
+                      <Stack.Screen name="how-it-works" />
                     </Stack>
                     <StatusBar style="auto" />
                   </QueryClientProvider>
