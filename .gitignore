@@ -66,3 +66,16 @@ venv/
 .venv/
 env/
 .env/
+
+# secrets / local env
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+logs/
+out/
+
+# local tooling
+.DS_Store

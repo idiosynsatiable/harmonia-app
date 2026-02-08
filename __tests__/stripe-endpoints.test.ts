@@ -1,4 +1,7 @@
 import { describe, it, expect } from "vitest";
+import path from "node:path";
+const ROOT = process.cwd();
+
 
 /**
  * Stripe Payment Endpoints Test
@@ -10,7 +13,7 @@ import { describe, it, expect } from "vitest";
 describe("Stripe Payment Integration", () => {
   it("should have payment router defined", () => {
     // Verify payment router exists in server/routers.ts
-    const routersPath = "/home/ubuntu/harmonia_healing_app/server/routers.ts";
+    const routersPath = path.join(ROOT, 'server', 'routers.ts');
     const fs = require("fs");
     const content = fs.readFileSync(routersPath, "utf-8");
     
@@ -21,7 +24,7 @@ describe("Stripe Payment Integration", () => {
   });
 
   it("should have Stripe module with proper error handling", () => {
-    const stripePath = "/home/ubuntu/harmonia_healing_app/server/stripe.ts";
+    const stripePath = path.join(ROOT, 'server', 'stripe.ts');
     const fs = require("fs");
     const content = fs.readFileSync(stripePath, "utf-8");
     
@@ -34,7 +37,7 @@ describe("Stripe Payment Integration", () => {
   });
 
   it("should have subscription database schema", () => {
-    const schemaPath = "/home/ubuntu/harmonia_healing_app/drizzle/schema.ts";
+    const schemaPath = path.join(ROOT, 'drizzle', 'schema.ts');
     const fs = require("fs");
     const content = fs.readFileSync(schemaPath, "utf-8");
     
@@ -45,7 +48,7 @@ describe("Stripe Payment Integration", () => {
   });
 
   it("should have pricing tiers defined", () => {
-    const stripePath = "/home/ubuntu/harmonia_healing_app/server/stripe.ts";
+    const stripePath = path.join(ROOT, 'server', 'stripe.ts');
     const fs = require("fs");
     const content = fs.readFileSync(stripePath, "utf-8");
     
@@ -59,7 +62,7 @@ describe("Stripe Payment Integration", () => {
   });
 
   it("should use TEST mode Stripe key", () => {
-    const stripePath = "/home/ubuntu/harmonia_healing_app/server/stripe.ts";
+    const stripePath = path.join(ROOT, 'server', 'stripe.ts');
     const fs = require("fs");
     const content = fs.readFileSync(stripePath, "utf-8");
     
@@ -69,7 +72,7 @@ describe("Stripe Payment Integration", () => {
   });
 
   it("should have graceful failure handling", () => {
-    const routersPath = "/home/ubuntu/harmonia_healing_app/server/routers.ts";
+    const routersPath = path.join(ROOT, 'server', 'routers.ts');
     const fs = require("fs");
     const content = fs.readFileSync(routersPath, "utf-8");
     
@@ -79,7 +82,7 @@ describe("Stripe Payment Integration", () => {
   });
 
   it("should have webhook endpoint defined", () => {
-    const stripePath = "/home/ubuntu/harmonia_healing_app/server/stripe.ts";
+    const stripePath = path.join(ROOT, 'server', 'stripe.ts');
     const fs = require("fs");
     const content = fs.readFileSync(stripePath, "utf-8");
     
@@ -91,7 +94,7 @@ describe("Stripe Payment Integration", () => {
 
 describe("Payment Flow Safety", () => {
   it("should not expose live Stripe keys", () => {
-    const stripePath = "/home/ubuntu/harmonia_healing_app/server/stripe.ts";
+    const stripePath = path.join(ROOT, 'server', 'stripe.ts');
     const fs = require("fs");
     const content = fs.readFileSync(stripePath, "utf-8");
     
@@ -101,7 +104,7 @@ describe("Payment Flow Safety", () => {
   });
 
   it("should have subscription status enum", () => {
-    const schemaPath = "/home/ubuntu/harmonia_healing_app/drizzle/schema.ts";
+    const schemaPath = path.join(ROOT, 'drizzle', 'schema.ts');
     const fs = require("fs");
     const content = fs.readFileSync(schemaPath, "utf-8");
     
@@ -111,7 +114,7 @@ describe("Payment Flow Safety", () => {
   });
 
   it("should have user-subscription relationship", () => {
-    const schemaPath = "/home/ubuntu/harmonia_healing_app/drizzle/schema.ts";
+    const schemaPath = path.join(ROOT, 'drizzle', 'schema.ts');
     const fs = require("fs");
     const content = fs.readFileSync(schemaPath, "utf-8");
     

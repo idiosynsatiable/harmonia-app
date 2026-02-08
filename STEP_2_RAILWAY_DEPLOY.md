@@ -211,7 +211,7 @@ If you see your Price IDs in the response, **deployment is successful!** ✅
 
 Now that your backend is deployed, update the mobile app to use the Railway URL:
 
-1. Open `/home/ubuntu/harmonia_healing_app/lib/trpc.ts`
+1. Open `${PROJECT_ROOT}/lib/trpc.ts`
 2. Find the `url` constant
 3. Replace with your Railway URL:
 

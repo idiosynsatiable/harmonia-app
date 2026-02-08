@@ -166,7 +166,7 @@ Verify webhook endpoint receives and processes Stripe events.
 Verify mobile app can communicate with backend.
 
 ### Update Mobile App
-1. Open `/home/ubuntu/harmonia_healing_app/lib/trpc.ts`
+1. Open `${PROJECT_ROOT}/lib/trpc.ts`
 2. Update API URL:
    ```typescript
    const url = __DEV__

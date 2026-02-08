@@ -23,7 +23,7 @@ Before building the APK, ensure you have:
 ### 1.1 Initialize EAS in Your Project
 
 ```bash
-cd /home/ubuntu/harmonia_healing_app
+cd ${PROJECT_ROOT}
 eas init --id <your-expo-project-id>
 ```
 

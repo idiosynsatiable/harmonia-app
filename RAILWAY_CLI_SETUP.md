@@ -24,7 +24,7 @@ The token you provided (`da2a4e0e-c75c-4c28-9a88-beca1b839df8`) appears to be a 
 
 ```bash
 # Download Railway CLI
-cd /home/ubuntu/harmonia_healing_app
+cd ${PROJECT_ROOT}
 curl -fsSL cli.new/railway -o railway-install.sh
 bash railway-install.sh
 
@@ -48,7 +48,7 @@ railway login
 ### Deploy
 
 ```bash
-cd /home/ubuntu/harmonia_healing_app
+cd ${PROJECT_ROOT}
 
 # Initialize project
 railway init
@@ -104,7 +104,7 @@ Railway can auto-deploy from Git pushes:
 ### Deploy
 
 ```bash
-cd /home/ubuntu/harmonia_healing_app
+cd ${PROJECT_ROOT}
 git add .
 git commit -m "Deploy to Railway"
 git push origin main

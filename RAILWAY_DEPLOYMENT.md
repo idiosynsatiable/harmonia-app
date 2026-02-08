@@ -18,7 +18,7 @@ This guide walks you through deploying the Harmonia backend server to Railway.ap
 The backend server is already configured in this project at `/server/`. Ensure your code is pushed to GitHub:
 
 ```bash
-cd /home/ubuntu/harmonia_healing_app
+cd ${PROJECT_ROOT}
 git add .
 git commit -m "Prepare for Railway deployment"
 git push origin main
@@ -143,7 +143,7 @@ After first deployment, run the database migration:
 
 Update the mobile app to point to your Railway backend:
 
-1. Open `/home/ubuntu/harmonia_healing_app/lib/trpc.ts`
+1. Open `${PROJECT_ROOT}/lib/trpc.ts`
 2. Replace the API URL with your Railway URL:
 
 ```typescript

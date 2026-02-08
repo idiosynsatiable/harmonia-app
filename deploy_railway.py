@@ -68,7 +68,7 @@ def main():
     print("   → Read: STEP_2_RAILWAY_DEPLOY.md")
     
     print("\n   For Git Push Deployment:")
-    print("   → cd /home/ubuntu/harmonia_healing_app")
+    print("   → cd ${PROJECT_ROOT}")
     print("   → git add .")
     print("   → git commit -m 'Deploy to Railway'")
     print("   → git push origin main")
@@ -125,7 +125,7 @@ def main():
     try:
         result = subprocess.run(
             ["git", "status", "--porcelain"],
-            cwd="/home/ubuntu/harmonia_healing_app",
+            cwd="${PROJECT_ROOT}",
             capture_output=True,
             text=True
         )
@@ -134,7 +134,7 @@ def main():
             print_warning("You have uncommitted changes:")
             print(result.stdout)
             print("\n   Run these commands to commit:")
-            print("   cd /home/ubuntu/harmonia_healing_app")
+            print("   cd ${PROJECT_ROOT}")
             print("   git add .")
             print("   git commit -m 'Prepare for Railway deployment'")
             print("   git push origin main")

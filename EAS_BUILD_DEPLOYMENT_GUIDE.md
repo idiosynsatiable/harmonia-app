@@ -50,7 +50,7 @@ Your app is already configured with:
 
 ```bash
 # Navigate to your project
-cd /home/ubuntu/harmonia_healing_app
+cd ${PROJECT_ROOT}
 
 # Create a keystore for Android signing (do this once)
 # EAS will handle this automatically, but you can create manually:

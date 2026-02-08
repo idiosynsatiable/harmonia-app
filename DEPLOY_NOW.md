@@ -23,7 +23,7 @@ Everything is configured and ready. Just follow these 3 simple steps:
 ### Step 1: Push to GitHub (if not already done)
 
 ```bash
-cd /home/ubuntu/harmonia_healing_app
+cd ${PROJECT_ROOT}
 git add .
 git commit -m "Add Railway configuration - ready to deploy"
 git push origin main
