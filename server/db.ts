@@ -98,22 +98,27 @@ import { subscriptions, type InsertSubscription, type Subscription } from "../dr
  * Get user's active subscription
  */
 export async function getUserSubscription(userId: number): Promise<Subscription | null> {
-  const db = await getDb();
-  if (!db) return null;
+  try {
+    const db = await getDb();
+    if (!db) return null;
 
-  const results = await db
-    .select()
-    .from(subscriptions)
-    .where(
-      and(
-        eq(subscriptions.userId, userId),
-        eq(subscriptions.status, "active")
+    const results = await db
+      .select()
+      .from(subscriptions)
+      .where(
+        and(
+          eq(subscriptions.userId, userId),
+          eq(subscriptions.status, "active")
+        )
       )
-    )
-    .orderBy(desc(subscriptions.createdAt))
-    .limit(1);
+      .orderBy(desc(subscriptions.createdAt))
+      .limit(1);
 
-  return results[0] || null;
+    return results[0] || null;
+  } catch (error) {
+    console.error("[Database] Failed to get user subscription:", error);
+    return null;
+  }
 }
 
 /**
@@ -134,11 +139,16 @@ export async function getUserSubscriptions(userId: number): Promise<Subscription
  * Create a new subscription
  */
 export async function createSubscription(data: InsertSubscription): Promise<number> {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+  try {
+    const db = await getDb();
+    if (!db) throw new Error("Database not available");
 
-  const result = await db.insert(subscriptions).values(data);
-  return Number((result as any).insertId || 0);
+    const result = await db.insert(subscriptions).values(data);
+    return Number((result as any).insertId || 0);
+  } catch (error) {
+    console.error("[Database] Failed to create subscription:", error);
+    throw new Error("Failed to create subscription record");
+  }
 }
 
 /**

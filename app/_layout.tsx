@@ -13,6 +13,7 @@ import { AudioEngineProvider } from "@/lib/audio-engine";
 import { PremiumProvider } from "@/lib/premium-context";
 import { BluetoothProvider } from "@/lib/bluetooth-manager";
 import { BackgroundAudioProvider } from "@/lib/background-audio-manager";
+import { ErrorBoundary } from "@/components/error-boundary";
 import {
   SafeAreaFrameContext,
   SafeAreaInsetsContext,
@@ -85,7 +86,8 @@ export default function RootLayout() {
 
   const content = (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <PremiumProvider>
+      <ErrorBoundary>
+        <PremiumProvider>
           <AudioEngineProvider>
             <BluetoothProvider>
               <BackgroundAudioProvider>
@@ -105,6 +107,7 @@ export default function RootLayout() {
             </BluetoothProvider>
           </AudioEngineProvider>
         </PremiumProvider>
+      </ErrorBoundary>
     </GestureHandlerRootView>
   );
 

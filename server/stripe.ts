@@ -61,29 +61,34 @@ export async function createCheckoutSession(params: {
     throw new Error(`No price ID configured for tier: ${tier}`);
   }
 
-  // Create checkout session
-  const session = await stripe.checkout.sessions.create({
-    mode: tier === "lifetime" ? "payment" : "subscription",
-    payment_method_types: ["card"],
-    line_items: [
-      {
-        price: tierInfo.priceId,
-        quantity: 1,
+  try {
+    // Create checkout session
+    const session = await stripe.checkout.sessions.create({
+      mode: tier === "lifetime" ? "payment" : "subscription",
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price: tierInfo.priceId,
+          quantity: 1,
+        },
+      ],
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      client_reference_id: userId.toString(),
+      metadata: {
+        userId: userId.toString(),
+        tier,
       },
-    ],
-    success_url: successUrl,
-    cancel_url: cancelUrl,
-    client_reference_id: userId.toString(),
-    metadata: {
-      userId: userId.toString(),
-      tier,
-    },
-  });
+    });
 
-  return {
-    sessionId: session.id,
-    url: session.url,
-  };
+    return {
+      sessionId: session.id,
+      url: session.url,
+    };
+  } catch (error: any) {
+    console.error("Stripe checkout session creation failed:", error);
+    throw new Error(`Payment initialization failed: ${error.message}`);
+  }
 }
 
 /**
