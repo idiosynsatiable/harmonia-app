@@ -5,6 +5,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
+    deps: {
+      inline: [/hooks/, /lib/],
+    },
   },
   resolve: {
     alias: {
