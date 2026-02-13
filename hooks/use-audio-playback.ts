@@ -152,7 +152,7 @@ export function useAudioPlayback() {
   /**
    * Play a track
    */
-  const playTrack = async (trackId: string, audioUri: string, initialVolume: number = 0.7) => {
+  const playTrack = async (trackId: string, audioUri: string, initialVolume: number = 0.7, trackDurationMinutes?: number) => {
     try {
       // Stop current track if playing
       if (player.playing) {
@@ -161,7 +161,16 @@ export function useAudioPlayback() {
 
       // Set up session timer for free tier
       const maxSessionLength = getMaxSessionLength();
-      const sessionDurationSeconds = maxSessionLength > 0 ? maxSessionLength * 60 : 0;
+      let sessionDurationSeconds = maxSessionLength > 0 ? maxSessionLength * 60 : 0;
+      
+      // If track duration is provided and less than max session length, use it
+      if (trackDurationMinutes && trackDurationMinutes > 0) {
+        const trackSeconds = trackDurationMinutes * 60;
+        if (sessionDurationSeconds === 0 || trackSeconds < sessionDurationSeconds) {
+          sessionDurationSeconds = trackSeconds;
+        }
+      }
+
       setSessionDuration(sessionDurationSeconds);
       setSessionStartTime(Date.now());
       setRemainingTime(sessionDurationSeconds);

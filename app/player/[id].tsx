@@ -24,7 +24,7 @@ export default function PlayerScreen() {
 
   useEffect(() => {
     if (track) {
-      playTrack(track.id, track.audioFile);
+      playTrack(track.id, track.audioFile, 0.7, track.duration);
     }
     return () => {
       stop();
@@ -102,6 +102,16 @@ export default function PlayerScreen() {
           {remainingTime > 0 ? "Time Remaining (Free Tier)" : "Session Complete"}
         </Text>
       </View>
+
+      {/* Headphones Warning */}
+      {track.headphonesRequired && (
+        <View className="bg-primary/10 p-3 rounded-lg mb-6 flex-row items-center gap-3">
+          <Text className="text-xl">🎧</Text>
+          <Text className="text-xs text-primary font-semibold flex-1">
+            Headphones required for this binaural experience to function correctly.
+          </Text>
+        </View>
+      )}
 
       {/* Playback Controls */}
       <View className="flex-row items-center justify-center gap-6 mb-8">

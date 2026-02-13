@@ -1,4 +1,5 @@
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 import { ScreenContainer } from "@/components/screen-container";
 import { useColors } from "@/hooks/use-colors";
 import { getFocusTracks, getCalmTracks, getSleepTracks } from "@/lib/audio-tracks";
@@ -15,6 +16,7 @@ import { getFocusTracks, getCalmTracks, getSleepTracks } from "@/lib/audio-track
  */
 export default function ExploreScreen() {
   const colors = useColors();
+  const router = useRouter();
 
   // Get curated tracks from data model
   const focusSessions = getFocusTracks().slice(0, 3);
@@ -27,8 +29,7 @@ export default function ExploreScreen() {
       className="bg-surface rounded-xl p-4 mb-3 border border-border active:opacity-70"
       style={{ borderColor: colors.border }}
       onPress={() => {
-        // TODO: Navigate to session player
-        console.log("Play session:", session.name);
+        router.push(`/player/${session.id}`);
       }}
     >
       <View className="flex-row items-center justify-between mb-2">

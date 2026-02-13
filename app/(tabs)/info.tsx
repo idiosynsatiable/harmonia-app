@@ -17,7 +17,7 @@ import { UnlockModal } from "@/components/unlock-modal";
  * - Legal links
  * - Founding Listener badge
  */
-export default function AccountScreen() {
+export default function InfoScreen() {
   const colors = useColors();
   const router = useRouter();
   const [showUnlockModal, setShowUnlockModal] = useState(false);
@@ -63,9 +63,9 @@ export default function AccountScreen() {
         <View className="flex-1 gap-6">
           {/* Header */}
           <View className="mt-4">
-            <Text className="text-3xl font-bold text-foreground">Account</Text>
+            <Text className="text-3xl font-bold text-foreground">Info</Text>
             <Text className="text-base text-muted mt-1">
-              Settings, safety, and information
+              Safety, science, and guidance
             </Text>
           </View>
 
