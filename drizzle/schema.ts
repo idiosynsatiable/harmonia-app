@@ -45,3 +45,21 @@ export const subscriptions = mysqlTable("subscriptions", {
 
 export type Subscription = typeof subscriptions.$inferSelect;
 export type InsertSubscription = typeof subscriptions.$inferInsert;
+
+/**
+ * User custom presets table
+ */
+export const presets = mysqlTable("presets", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  category: varchar("category", { length: 50 }),
+  settings: text("settings").notNull(), // JSON stringified settings
+  isFavorite: int("isFavorite").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Preset = typeof presets.$inferSelect;
+export type InsertPreset = typeof presets.$inferInsert;

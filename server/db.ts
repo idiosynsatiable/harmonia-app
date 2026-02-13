@@ -92,7 +92,7 @@ export async function getUserByOpenId(openId: string) {
 // Subscription management functions
 
 import { and, desc } from "drizzle-orm";
-import { subscriptions, type InsertSubscription, type Subscription } from "../drizzle/schema";
+import { subscriptions, type InsertSubscription, type Subscription, presets, type InsertPreset, type Preset } from "../drizzle/schema";
 
 /**
  * Get user's active subscription
@@ -255,4 +255,41 @@ export async function getSystemStats() {
     console.error("[Database] Failed to fetch system stats:", error);
     throw error;
   }
+}
+
+/**
+ * Get user's custom presets
+ */
+export async function getUserPresets(userId: number): Promise<Preset[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select()
+    .from(presets)
+    .where(eq(presets.userId, userId))
+    .orderBy(desc(presets.createdAt));
+}
+
+/**
+ * Create a new custom preset
+ */
+export async function createPreset(data: InsertPreset): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(presets).values(data);
+  return Number((result as any).insertId || 0);
+}
+
+/**
+ * Delete a custom preset
+ */
+export async function deletePreset(id: number, userId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .delete(presets)
+    .where(and(eq(presets.id, id), eq(presets.userId, userId)));
 }

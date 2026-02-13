@@ -87,6 +87,41 @@ export const appRouter = router({
       return { success: true };
     }),
   }),
+
+  // Custom Presets (Premium Feature)
+  presets: router({
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return db.getUserPresets(ctx.user.id);
+    }),
+
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string().min(1),
+          description: z.string().optional(),
+          category: z.string().optional(),
+          settings: z.string(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        // Check if user is premium
+        const sub = await db.getUserSubscription(ctx.user.id);
+        if (!sub || sub.tier === "free") {
+          throw new Error("Custom presets are a premium feature");
+        }
+
+        return db.createPreset({
+          userId: ctx.user.id,
+          ...input,
+        });
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        return db.deletePreset(input.id, ctx.user.id);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
