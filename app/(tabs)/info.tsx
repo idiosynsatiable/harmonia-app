@@ -219,6 +219,15 @@ export default function InfoScreen() {
             />
             
             <MenuItem
+              icon="📊"
+              title="Admin Dashboard"
+              subtitle="Manage users and view analytics"
+              onPress={() => {
+                router.push("/admin/dashboard");
+              }}
+            />
+            
+            <MenuItem
               icon="📧"
               title="Contact Support"
               subtitle="Dall.whitt@gmail.com"

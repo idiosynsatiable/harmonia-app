@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
@@ -217,4 +217,42 @@ export async function getSubscriptionByCustomerId(
     .limit(1);
 
   return results[0] || null;
+}
+
+/**
+ * Get system-wide statistics for admin dashboard
+ */
+export async function getSystemStats() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  try {
+    // Count total users
+    const userCountResult = await db.select({ count: sql<number>`count(*)` }).from(users);
+    const totalUsers = Number(userCountResult[0]?.count || 0);
+
+    // Count active subscriptions
+    const activeSubCountResult = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(subscriptions)
+      .where(eq(subscriptions.status, "active"));
+    const activeSubscriptions = Number(activeSubCountResult[0]?.count || 0);
+
+    // Calculate conversion rate
+    const conversionRate = totalUsers > 0 
+      ? Number(((activeSubscriptions / totalUsers) * 100).toFixed(1)) 
+      : 0;
+
+    // In a real app, you'd sum up successful payments for revenue
+    // For now, we'll return a placeholder or 0
+    return {
+      totalUsers,
+      activeSubscriptions,
+      totalRevenue: 0, // Placeholder
+      conversionRate,
+    };
+  } catch (error) {
+    console.error("[Database] Failed to fetch system stats:", error);
+    throw error;
+  }
 }

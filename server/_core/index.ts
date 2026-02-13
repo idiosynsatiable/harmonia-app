@@ -7,6 +7,7 @@ import rateLimit from "express-rate-limit";
 import cors from "cors";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
+import { registerWebhookRoutes } from "../webhooks";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 
@@ -73,10 +74,14 @@ async function startServer() {
     res.status(200).send("Harmonia API online");
   });
 
+  // Stripe webhooks need raw body for signature verification
+  app.use("/api/webhooks/stripe", express.raw({ type: "application/json" }));
+
   app.use(express.json({ limit: "1mb" })); // Reduced limit for security
   app.use(express.urlencoded({ limit: "1mb", extended: true }));
 
   registerOAuthRoutes(app);
+  registerWebhookRoutes(app);
 
   app.get("/api/health", (_req, res) => {
     res.json({ ok: true, timestamp: Date.now() });
