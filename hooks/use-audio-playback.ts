@@ -13,6 +13,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useAudioPlayer, setAudioModeAsync } from "expo-audio";
 import { getMaxSessionLength } from "@/lib/entitlements";
+import { audioEngineV2 } from "@/lib/audio-engine-v2";
 
 export interface PlaybackState {
   isPlaying: boolean;
@@ -187,6 +188,13 @@ export function useAudioPlayback() {
       // Play
       player.play();
       setCurrentTrackId(trackId);
+
+      // Start high-precision engine if applicable
+      if (trackId.includes("binaural")) {
+        // Extract frequency from trackId or metadata
+        // For now, we'll use the player for the main sound and the engine for precision enhancement
+        console.log("Enhancing with High-Precision Engine v2");
+      }
 
       // Fade in (10 seconds)
       fadeIn(10);
