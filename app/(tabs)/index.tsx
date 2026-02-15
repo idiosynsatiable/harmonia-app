@@ -1,141 +1,223 @@
-import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
+import { ScrollView, Text, View, Pressable, Image } from "react-native";
 import { router } from "expo-router";
 import { ScreenContainer } from "@/components/screen-container";
 import { useColors } from "@/hooks/use-colors";
-import { useState } from "react";
-import { audioTracks, getTracksByType, type TrackType } from "@/lib/audio-tracks";
+import { audioTracks } from "@/lib/audio-tracks";
+import { usePlayerStore } from "@/src/core/playerStore";
+import { SessionCard } from "@/src/ui/SessionCard";
 
 /**
- * Library Screen - All 21 Tracks with Filters
+ * Listen Screen - Now Playing + Quick Access
  * 
- * Filters:
- * - Type: Binaural, Isochronic, Ambient, Harmonic
- * - Duration: 10, 15, 30, 60 min
- * - Favorites toggle
- * 
- * Sorting:
- * - Default: Recommended
- * - Optional: Alphabetical, Duration
+ * Features:
+ * - Now Playing card (if active)
+ * - Quick-start presets
+ * - Recent sessions
+ * - Favorite sessions
  */
-export default function LibraryScreen() {
+export default function ListenScreen() {
   const colors = useColors();
-  const [activeFilter, setActiveFilter] = useState<string>("all");
+  const { currentSession, isPlaying, favorites, recents, loadSession } = usePlayerStore();
 
-  // Get filtered tracks from data model
-  const filteredTracks = activeFilter === "all" 
-    ? audioTracks 
-    : getTracksByType(activeFilter as TrackType);
+  // Get recent and favorite sessions
+  const recentSessions = recents
+    .map(id => audioTracks.find(t => t.id === id))
+    .filter(Boolean)
+    .slice(0, 5);
 
-  const renderTrackCard = (track: any) => (
-    <TouchableOpacity
-      key={track.id}
-      className="bg-surface rounded-xl p-4 mb-3 border border-border active:opacity-70"
-      style={{ borderColor: colors.border }}
-      onPress={() => router.push(`/player/${track.id}`)}
-    >
-      <View className="flex-row items-center justify-between mb-2">
-        <View className="flex-1">
-          <Text className="text-base font-semibold text-foreground">
-            {track.name}
-          </Text>
-          {track.headphonesRequired && (
-            <Text className="text-xs text-muted mt-1">
-              🎧 Headphones required
-            </Text>
-          )}
-        </View>
-        <View className="bg-primary/20 px-2 py-1 rounded-full">
-          <Text className="text-xs font-semibold" style={{ color: colors.primary }}>
-            {track.duration} min
-          </Text>
-        </View>
-      </View>
-      
-      <View className="flex-row items-center gap-2">
-        <Text className="text-xs text-muted">
-          {track.type.charAt(0).toUpperCase() + track.type.slice(1)}
-        </Text>
-        <Text className="text-xs text-muted">•</Text>
-        <Text className="text-xs text-muted">
-          {track.frequency}
-        </Text>
-        <Text className="text-xs text-muted">•</Text>
-        <Text className="text-xs" style={{ color: colors.primary }}>
-          {track.category.charAt(0).toUpperCase() + track.category.slice(1)}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+  const favoriteSessions = favorites
+    .map(id => audioTracks.find(t => t.id === id))
+    .filter(Boolean);
 
-  const FilterButton = ({ label, value }: { label: string; value: string }) => (
-    <TouchableOpacity
-      className="px-4 py-2 rounded-full mr-2"
-      style={{
-        backgroundColor: activeFilter === value ? colors.primary : colors.surface,
-        borderWidth: 1,
-        borderColor: activeFilter === value ? colors.primary : colors.border,
-      }}
-      onPress={() => setActiveFilter(value)}
-    >
-      <Text
-        className="text-sm font-semibold"
-        style={{ color: activeFilter === value ? "#ffffff" : colors.foreground }}
-      >
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
+  // Quick-start presets (curated selection)
+  const quickStartPresets = [
+    audioTracks.find(t => t.id === 'deep-focus'),
+    audioTracks.find(t => t.id === 'relaxed-awareness'),
+    audioTracks.find(t => t.id === 'sleep-delta'),
+  ].filter(Boolean);
+
+  const handleSessionPress = (session: any) => {
+    loadSession({
+      id: session.id,
+      name: session.name,
+      description: session.description,
+      type: session.type,
+      frequency: session.frequency,
+      duration: session.duration,
+      category: session.category,
+      audioFile: session.audioFile,
+      headphonesRequired: session.headphonesRequired,
+    });
+    router.push(`/player/${session.id}`);
+  };
 
   return (
-    <ScreenContainer className="p-6">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className="flex-1 gap-4">
-          {/* Logo Header */}
-          <View className="items-center mb-6 pt-4">
-            <Image
-              source={require("@/assets/images/harmonia-logo.png")}
-              style={{ width: 120, height: 120 }}
-              resizeMode="contain"
-            />
-            <Text className="text-2xl font-bold text-foreground mt-4">Harmonia</Text>
-            <Text className="text-sm text-muted mt-1">Sound experiences for focus, calm & mindfulness</Text>
-          </View>
-
-          {/* Header */}
-          <View className="mt-4">
-            <Text className="text-3xl font-bold text-foreground">Library</Text>
-            <Text className="text-base text-muted mt-1">
-              All 21 audio experiences
-            </Text>
-          </View>
-
-          {/* Filters */}
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2">
-            <View className="flex-row">
-              <FilterButton label="All" value="all" />
-              <FilterButton label="Binaural" value="binaural" />
-              <FilterButton label="Isochronic" value="isochronic" />
-              <FilterButton label="Harmonic" value="harmonic" />
-              <FilterButton label="Ambient" value="ambient" />
-            </View>
-          </ScrollView>
-
-          {/* Track Count */}
-          <Text className="text-sm text-muted">
-            {filteredTracks.length} {filteredTracks.length === 1 ? "track" : "tracks"}
+    <ScreenContainer className="flex-1">
+      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+        {/* Logo Header */}
+        <View style={{ alignItems: 'center', paddingVertical: 24 }}>
+          <Image
+            source={require("@/assets/images/harmonia-logo.png")}
+            style={{ width: 100, height: 100 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: colors.foreground, marginTop: 12 }}>
+            Harmonia
           </Text>
+          <Text style={{ fontSize: 14, color: colors.muted, marginTop: 4 }}>
+            Sound experiences for focus, calm & sleep
+          </Text>
+        </View>
 
-          {/* Tracks List */}
-          <View>
-            {filteredTracks.map(renderTrackCard)}
-          </View>
-
-          {/* Safety Footer */}
-          <View className="mt-4 mb-8">
-            <Text className="text-xs text-muted text-center leading-relaxed">
-              Not intended for medical use. Stop listening if discomfort occurs.
+        {/* Now Playing Section */}
+        {currentSession && (
+          <View style={{ paddingHorizontal: 20, marginBottom: 32 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.foreground, marginBottom: 12 }}>
+              🎵 Now Playing
             </Text>
+            <Pressable
+              onPress={() => router.push(`/player/${currentSession.id}`)}
+              style={({ pressed }) => ({
+                backgroundColor: colors.primary + '15',
+                borderRadius: 16,
+                padding: 20,
+                borderWidth: 2,
+                borderColor: colors.primary,
+                opacity: pressed ? 0.7 : 1,
+              })}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+                <View
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: 6,
+                    backgroundColor: isPlaying ? colors.primary : colors.muted,
+                    marginRight: 8,
+                  }}
+                />
+                <Text style={{ fontSize: 12, color: colors.muted, fontWeight: '600' }}>
+                  {isPlaying ? 'PLAYING' : 'PAUSED'}
+                </Text>
+              </View>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.foreground, marginBottom: 4 }}>
+                {currentSession.name}
+              </Text>
+              <Text style={{ fontSize: 14, color: colors.muted }}>
+                {currentSession.type} • {currentSession.frequency}
+              </Text>
+            </Pressable>
           </View>
+        )}
+
+        {/* Quick Start Section */}
+        <View style={{ paddingHorizontal: 20, marginBottom: 32 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.foreground, marginBottom: 12 }}>
+            ⚡ Quick Start
+          </Text>
+          {quickStartPresets.map((session) => (
+            <SessionCard
+              key={session.id}
+              session={{
+                id: session.id,
+                name: session.name,
+                description: session.description,
+                type: session.type,
+                frequency: session.frequency,
+                duration: session.duration,
+                category: session.category,
+                audioFile: session.audioFile,
+                headphonesRequired: session.headphonesRequired,
+              }}
+              onPress={() => handleSessionPress(session)}
+            />
+          ))}
+        </View>
+
+        {/* Recents Section */}
+        {recentSessions.length > 0 && (
+          <View style={{ paddingHorizontal: 20, marginBottom: 32 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.foreground, marginBottom: 12 }}>
+              🕐 Recent
+            </Text>
+            {recentSessions.map((session) => (
+              <SessionCard
+                key={session.id}
+                session={{
+                  id: session.id,
+                  name: session.name,
+                  description: session.description,
+                  type: session.type,
+                  frequency: session.frequency,
+                  duration: session.duration,
+                  category: session.category,
+                  audioFile: session.audioFile,
+                  headphonesRequired: session.headphonesRequired,
+                }}
+                onPress={() => handleSessionPress(session)}
+              />
+            ))}
+          </View>
+        )}
+
+        {/* Favorites Section */}
+        {favoriteSessions.length > 0 && (
+          <View style={{ paddingHorizontal: 20, marginBottom: 32 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.foreground, marginBottom: 12 }}>
+              ⭐ Favorites
+            </Text>
+            {favoriteSessions.map((session) => (
+              <SessionCard
+                key={session.id}
+                session={{
+                  id: session.id,
+                  name: session.name,
+                  description: session.description,
+                  type: session.type,
+                  frequency: session.frequency,
+                  duration: session.duration,
+                  category: session.category,
+                  audioFile: session.audioFile,
+                  headphonesRequired: session.headphonesRequired,
+                }}
+                onPress={() => handleSessionPress(session)}
+              />
+            ))}
+          </View>
+        )}
+
+        {/* Empty State */}
+        {!currentSession && recentSessions.length === 0 && favoriteSessions.length === 0 && (
+          <View style={{ paddingHorizontal: 20, paddingVertical: 40, alignItems: 'center' }}>
+            <Text style={{ fontSize: 48, marginBottom: 16 }}>🎧</Text>
+            <Text style={{ fontSize: 18, fontWeight: '600', color: colors.foreground, marginBottom: 8, textAlign: 'center' }}>
+              Start Your First Session
+            </Text>
+            <Text style={{ fontSize: 14, color: colors.muted, textAlign: 'center', marginBottom: 24 }}>
+              Explore curated sessions for focus, calm, and sleep
+            </Text>
+            <Pressable
+              onPress={() => router.push('/(tabs)/explore')}
+              style={({ pressed }) => ({
+                backgroundColor: colors.primary,
+                paddingHorizontal: 24,
+                paddingVertical: 12,
+                borderRadius: 24,
+                opacity: pressed ? 0.8 : 1,
+              })}
+            >
+              <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '600' }}>
+                Explore Sessions
+              </Text>
+            </Pressable>
+          </View>
+        )}
+
+        {/* Safety Footer */}
+        <View style={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 32 }}>
+          <Text style={{ fontSize: 11, color: colors.muted, textAlign: 'center', lineHeight: 16 }}>
+            Not intended for medical use. Stop listening if discomfort occurs.
+          </Text>
         </View>
       </ScrollView>
     </ScreenContainer>

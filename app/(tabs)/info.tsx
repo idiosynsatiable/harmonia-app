@@ -1,4 +1,5 @@
 import { ScrollView, Text, View, TouchableOpacity, Linking } from "react-native";
+import Constants from 'expo-constants';
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ScreenContainer } from "@/components/screen-container";
@@ -237,11 +238,50 @@ export default function InfoScreen() {
             />
           </View>
 
-          {/* App Version */}
-          <View className="items-center mt-4 mb-8">
-            <Text className="text-sm text-muted">
-              Harmonia v1.0.4
+          {/* Build Stamp */}
+          <View
+            style={{
+              backgroundColor: colors.surface,
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: colors.border,
+              padding: 16,
+              marginTop: 8,
+            }}
+          >
+            <Text style={{ fontSize: 14, fontWeight: '600', color: colors.foreground, marginBottom: 12 }}>
+              🏗️ Build Information
             </Text>
+            <View style={{ gap: 6 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 12, color: colors.muted }}>Version:</Text>
+                <Text style={{ fontSize: 12, color: colors.foreground, fontWeight: '500' }}>
+                  {Constants.expoConfig?.version || '1.1.0'}
+                </Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 12, color: colors.muted }}>Version Code:</Text>
+                <Text style={{ fontSize: 12, color: colors.foreground, fontWeight: '500' }}>
+                  {Constants.expoConfig?.android?.versionCode || 'N/A'}
+                </Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 12, color: colors.muted }}>Git SHA:</Text>
+                <Text style={{ fontSize: 12, color: colors.foreground, fontWeight: '500', fontFamily: 'monospace' }}>
+                  {process.env.EXPO_PUBLIC_GIT_SHA?.substring(0, 7) || 'unknown'}
+                </Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 12, color: colors.muted }}>Bundle ID:</Text>
+                <Text style={{ fontSize: 11, color: colors.foreground, fontWeight: '500' }} numberOfLines={1}>
+                  {Constants.expoConfig?.android?.package || 'N/A'}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* App Description */}
+          <View className="items-center mt-6 mb-8">
             <Text className="text-xs text-muted mt-2 text-center leading-relaxed">
               Sound-based experiences designed for focus, relaxation, and mindful states.
               Not intended for medical use.

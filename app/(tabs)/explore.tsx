@@ -1,105 +1,194 @@
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { FlatList, Text, View, TextInput, Pressable } from "react-native";
 import { useRouter } from "expo-router";
+import { useState, useMemo } from "react";
 import { ScreenContainer } from "@/components/screen-container";
 import { useColors } from "@/hooks/use-colors";
-import { getFocusTracks, getCalmTracks, getSleepTracks } from "@/lib/audio-tracks";
+import { audioTracks, getFocusTracks, getCalmTracks, getSleepTracks } from "@/lib/audio-tracks";
+import { SessionCard } from "@/src/ui/SessionCard";
+import { usePlayerStore } from "@/src/core/playerStore";
+
+type FilterType = 'all' | 'focus' | 'calm' | 'sleep';
 
 /**
- * Explore Screen - Guided Discovery
+ * Explore Screen - State-of-the-Art Discovery Experience
  * 
- * Three subsections:
- * - Focus (3-6 curated sessions)
- * - Calm (3-6 curated sessions)
- * - Sleep (3-6 curated sessions)
- * 
- * Prevents decision fatigue with curated selection
+ * Features:
+ * - Search functionality
+ * - Filter chips (All, Focus, Calm, Sleep)
+ * - Sectioned content with FlatList performance
+ * - Premium card-based layout
+ * - Integrated with central player store
  */
 export default function ExploreScreen() {
   const colors = useColors();
   const router = useRouter();
+  const { loadSession } = usePlayerStore();
+  
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
 
-  // Get curated tracks from data model
-  const focusSessions = getFocusTracks().slice(0, 3);
-  const calmSessions = getCalmTracks().slice(0, 3);
-  const sleepSessions = getSleepTracks().slice(0, 3);
+  // Filter and search logic
+  const filteredSessions = useMemo(() => {
+    let sessions = audioTracks;
+    
+    // Apply category filter
+    if (activeFilter !== 'all') {
+      sessions = sessions.filter(track => track.category === activeFilter);
+    }
+    
+    // Apply search
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      sessions = sessions.filter(track => 
+        track.name.toLowerCase().includes(query) ||
+        track.description.toLowerCase().includes(query) ||
+        track.type.toLowerCase().includes(query)
+      );
+    }
+    
+    return sessions;
+  }, [activeFilter, searchQuery]);
 
-  const renderSessionCard = (session: any) => (
-    <TouchableOpacity
-      key={session.id}
-      className="bg-surface rounded-xl p-4 mb-3 border border-border active:opacity-70"
-      style={{ borderColor: colors.border }}
-      onPress={() => {
-        router.push(`/player/${session.id}`);
-      }}
+  // Sectioned data for better organization
+  const sections = useMemo(() => {
+    if (searchQuery.trim() || activeFilter !== 'all') {
+      return [{ title: 'Results', data: filteredSessions }];
+    }
+    
+    return [
+      { title: '🎯 For Focus', data: getFocusTracks().slice(0, 4) },
+      { title: '🌊 For Calm', data: getCalmTracks().slice(0, 4) },
+      { title: '🌙 For Sleep', data: getSleepTracks().slice(0, 4) },
+    ];
+  }, [searchQuery, activeFilter, filteredSessions]);
+
+  const handleSessionPress = (session: any) => {
+    loadSession({
+      id: session.id,
+      name: session.name,
+      description: session.description,
+      type: session.type,
+      frequency: session.frequency,
+      duration: session.duration,
+      category: session.category,
+      audioFile: session.audioFile,
+      headphonesRequired: session.headphonesRequired,
+    });
+    router.push(`/player/${session.id}`);
+  };
+
+  const FilterChip = ({ label, value }: { label: string; value: FilterType }) => (
+    <Pressable
+      onPress={() => setActiveFilter(value)}
+      style={({ pressed }) => ({
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 20,
+        marginRight: 8,
+        backgroundColor: activeFilter === value ? colors.primary : colors.surface,
+        borderWidth: 1,
+        borderColor: activeFilter === value ? colors.primary : colors.border,
+        opacity: pressed ? 0.7 : 1,
+      })}
     >
-      <View className="flex-row items-center justify-between mb-2">
-        <Text className="text-lg font-semibold text-foreground">
-          {session.name}
-        </Text>
-        <View className="bg-primary/20 px-2 py-1 rounded-full">
-          <Text className="text-xs font-semibold" style={{ color: colors.primary }}>
-            {session.duration} min
-          </Text>
-        </View>
-      </View>
-      
-      <Text className="text-sm text-muted mb-1">
-        {session.type.charAt(0).toUpperCase() + session.type.slice(1)} • {session.frequency}
+      <Text
+        style={{
+          fontSize: 14,
+          fontWeight: '600',
+          color: activeFilter === value ? '#FFFFFF' : colors.foreground,
+        }}
+      >
+        {label}
       </Text>
-      
-      <Text className="text-sm text-foreground">
-        {session.description}
-      </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (
-    <ScreenContainer className="p-6">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className="flex-1 gap-6">
-          {/* Header */}
-          <View className="mt-4">
-            <Text className="text-3xl font-bold text-foreground">Explore</Text>
-            <Text className="text-base text-muted mt-1">
-              Curated sessions for your intention
-            </Text>
-          </View>
+    <ScreenContainer className="flex-1">
+      {/* Header */}
+      <View style={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12 }}>
+        <Text style={{ fontSize: 32, fontWeight: 'bold', color: colors.foreground, marginBottom: 4 }}>
+          Explore
+        </Text>
+        <Text style={{ fontSize: 15, color: colors.muted }}>
+          Discover sessions for focus, calm, and sleep
+        </Text>
+      </View>
 
-          {/* Focus Section */}
-          <View>
-            <View className="flex-row items-center gap-2 mb-3">
-              <Text className="text-2xl">🎯</Text>
-              <Text className="text-xl font-bold text-foreground">Focus</Text>
-            </View>
-            {focusSessions.map(renderSessionCard)}
-          </View>
+      {/* Search Bar */}
+      <View style={{ paddingHorizontal: 20, marginBottom: 16 }}>
+        <TextInput
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholder="Search sessions..."
+          placeholderTextColor={colors.muted}
+          style={{
+            backgroundColor: colors.surface,
+            borderRadius: 12,
+            paddingHorizontal: 16,
+            paddingVertical: 12,
+            fontSize: 15,
+            color: colors.foreground,
+            borderWidth: 1,
+            borderColor: colors.border,
+          }}
+        />
+      </View>
 
-          {/* Calm Section */}
-          <View>
-            <View className="flex-row items-center gap-2 mb-3">
-              <Text className="text-2xl">🌊</Text>
-              <Text className="text-xl font-bold text-foreground">Calm</Text>
-            </View>
-            {calmSessions.map(renderSessionCard)}
-          </View>
-
-          {/* Sleep Section */}
-          <View>
-            <View className="flex-row items-center gap-2 mb-3">
-              <Text className="text-2xl">🌙</Text>
-              <Text className="text-xl font-bold text-foreground">Sleep</Text>
-            </View>
-            {sleepSessions.map(renderSessionCard)}
-          </View>
-
-          {/* Safety Footer */}
-          <View className="mt-4 mb-8">
-            <Text className="text-xs text-muted text-center leading-relaxed">
-              Not intended for medical use. Stop listening if discomfort occurs.
-            </Text>
-          </View>
+      {/* Filter Chips */}
+      <View style={{ paddingHorizontal: 20, marginBottom: 16 }}>
+        <View style={{ flexDirection: 'row' }}>
+          <FilterChip label="All" value="all" />
+          <FilterChip label="Focus" value="focus" />
+          <FilterChip label="Calm" value="calm" />
+          <FilterChip label="Sleep" value="sleep" />
         </View>
-      </ScrollView>
+      </View>
+
+      {/* Sessions List */}
+      <FlatList
+        data={sections}
+        keyExtractor={(section) => section.title}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 100 }}
+        renderItem={({ item: section }) => (
+          <View style={{ marginBottom: 24 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: colors.foreground,
+                marginBottom: 12,
+              }}
+            >
+              {section.title}
+            </Text>
+            {section.data.map((session) => (
+              <SessionCard
+                key={session.id}
+                session={{
+                  id: session.id,
+                  name: session.name,
+                  description: session.description,
+                  type: session.type,
+                  frequency: session.frequency,
+                  duration: session.duration,
+                  category: session.category,
+                  audioFile: session.audioFile,
+                  headphonesRequired: session.headphonesRequired,
+                }}
+                onPress={() => handleSessionPress(session)}
+              />
+            ))}
+          </View>
+        )}
+        ListEmptyComponent={
+          <View style={{ paddingVertical: 40, alignItems: 'center' }}>
+            <Text style={{ fontSize: 16, color: colors.muted }}>
+              No sessions found
+            </Text>
+          </View>
+        }
+      />
     </ScreenContainer>
   );
 }
