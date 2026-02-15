@@ -4,13 +4,30 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as db from "./db";
-import { createCheckoutSession, PRICING_TIERS } from "./stripe";
+import { createCheckoutSession, createPortalSession, PRICING_TIERS } from "./stripe";
+import { ENV } from "./_core/env";
+
+/**
+ * Main Application Router
+ * Centralizes all tRPC procedures for auth, billing, and app features.
+ */
 
 export const appRouter = router({
-  // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
+  
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
+    
+    // Entitlements endpoint (Source of truth for client)
+    getEntitlements: protectedProcedure.query(async ({ ctx }) => {
+      const sub = await db.getUserSubscription(ctx.user.id);
+      return {
+        tier: sub?.tier || "free",
+        isActive: sub?.status === "active",
+        expiresAt: sub?.currentPeriodEnd,
+      };
+    }),
+
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
@@ -22,22 +39,15 @@ export const appRouter = router({
 
   // Payment and subscription management
   payment: router({
-    // Get user's current subscription
     getSubscription: protectedProcedure.query(async ({ ctx }) => {
       return db.getUserSubscription(ctx.user.id);
     }),
 
-    // Get all user subscriptions
-    getSubscriptions: protectedProcedure.query(async ({ ctx }) => {
-      return db.getUserSubscriptions(ctx.user.id);
-    }),
-
-    // Get pricing tiers
     getPricingTiers: publicProcedure.query(() => {
       return PRICING_TIERS;
     }),
 
-    // Create checkout session
+    // Create checkout session with robust error handling
     createCheckout: protectedProcedure
       .input(
         z.object({
@@ -48,25 +58,21 @@ export const appRouter = router({
         const { tier } = input;
         const userId = ctx.user.id;
 
-        // Check if user already has an active subscription
+        // Prevent duplicate active subscriptions
         const existing = await db.getUserSubscription(userId);
-        if (existing && existing.tier !== "free") {
-          throw new Error("You already have an active subscription");
+        if (existing && existing.status === "active" && existing.tier !== "free") {
+          throw new Error("You already have an active subscription. Manage it via the portal.");
         }
 
-        // Create Stripe checkout session
+        const successUrl = `${ENV.appOrigin}/payment-success?session_id={CHECKOUT_SESSION_ID}`;
+        const cancelUrl = `${ENV.appOrigin}/payment-cancel`;
+
         const session = await createCheckoutSession({
           tier,
           userId,
-          successUrl: `${process.env.APP_URL || "exp://localhost:8081"}/payment-success`,
-          cancelUrl: `${process.env.APP_URL || "exp://localhost:8081"}/payment-cancel`,
-        });
-
-        // Create pending subscription in database
-        await db.createSubscription({
-          userId,
-          tier,
-          status: "pending",
+          customerEmail: ctx.user.email || undefined,
+          successUrl,
+          cancelUrl,
         });
 
         return {
@@ -75,20 +81,26 @@ export const appRouter = router({
         };
       }),
 
-    // Cancel subscription
-    cancelSubscription: protectedProcedure.mutation(async ({ ctx }) => {
-      const subscription = await db.getUserSubscription(ctx.user.id);
-      if (!subscription) {
-        throw new Error("No active subscription found");
+    // Create customer portal session
+    createPortal: protectedProcedure.mutation(async ({ ctx }) => {
+      const sub = await db.getUserSubscription(ctx.user.id);
+      
+      if (!sub || !sub.stripeCustomerId) {
+        throw new Error("No billing history found. Please subscribe first.");
       }
 
-      await db.cancelUserSubscription(subscription.id);
+      const portal = await createPortalSession({
+        stripeCustomerId: sub.stripeCustomerId,
+        returnUrl: `${ENV.appOrigin}/(tabs)/info`,
+      });
 
-      return { success: true };
+      return {
+        url: portal.url,
+      };
     }),
   }),
 
-  // Custom Presets (Premium Feature)
+  // Custom Presets (Server-Side Gated)
   presets: router({
     list: protectedProcedure.query(async ({ ctx }) => {
       return db.getUserPresets(ctx.user.id);
@@ -104,10 +116,10 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ ctx, input }) => {
-        // Check if user is premium
+        // Strict server-side gating
         const sub = await db.getUserSubscription(ctx.user.id);
-        if (!sub || sub.tier === "free") {
-          throw new Error("Custom presets are a premium feature");
+        if (!sub || sub.status !== "active" || sub.tier === "free") {
+          throw new Error("Access Denied: Custom presets require an active Premium subscription.");
         }
 
         return db.createPreset({

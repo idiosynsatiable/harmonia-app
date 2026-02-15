@@ -79,3 +79,5 @@ out/
 
 # local tooling
 .DS_Store
+.env.production
+package-lock.json

@@ -1,15 +1,20 @@
 import Stripe from "stripe";
+import { ENV } from "./_core/env";
 
-// Initialize Stripe with restricted key
-const stripeKey = process.env.STRIPE_RESTRICTED_KEY || "";
-if (!stripeKey) {
-  console.warn("⚠️  STRIPE_RESTRICTED_KEY not set - payment features disabled");
-}
+/**
+ * Stripe Integration Module
+ * Handles checkout sessions, customer portal, and webhook verification.
+ */
 
-export const stripe = stripeKey ? new Stripe(stripeKey, {
+// Initialize Stripe with secret key from validated ENV
+export const stripe = ENV.stripeSecretKey ? new Stripe(ENV.stripeSecretKey, {
   apiVersion: "2025-12-15.clover",
   typescript: true,
 }) : null;
+
+if (!stripe) {
+  console.warn("⚠️  STRIPE_SECRET_KEY not set - payment features disabled");
+}
 
 // Harmonia pricing tiers (in cents)
 export const PRICING_TIERS = {
@@ -22,19 +27,19 @@ export const PRICING_TIERS = {
   premium: {
     name: "Premium",
     price: 999, // $9.99
-    priceId: process.env.STRIPE_PRICE_PREMIUM,
+    priceId: ENV.stripePricePremium,
     features: ["Unlimited sessions", "All tracks", "Advanced playback", "Offline mode"],
   },
   ultimate: {
     name: "Ultimate",
     price: 1999, // $19.99
-    priceId: process.env.STRIPE_PRICE_ULTIMATE,
+    priceId: ENV.stripePriceUltimate,
     features: ["Everything in Premium", "Priority support", "Early access to new features"],
   },
   lifetime: {
     name: "Lifetime",
     price: 4999, // $49.99
-    priceId: process.env.STRIPE_PRICE_LIFETIME,
+    priceId: ENV.stripePriceLifetime,
     features: ["Everything in Ultimate", "Lifetime access", "No recurring fees"],
   },
 } as const;
@@ -47,6 +52,7 @@ export type PricingTier = keyof typeof PRICING_TIERS;
 export async function createCheckoutSession(params: {
   tier: PricingTier;
   userId: number;
+  customerEmail?: string;
   successUrl: string;
   cancelUrl: string;
 }) {
@@ -54,7 +60,7 @@ export async function createCheckoutSession(params: {
     throw new Error("Stripe not initialized");
   }
 
-  const { tier, userId, successUrl, cancelUrl } = params;
+  const { tier, userId, customerEmail, successUrl, cancelUrl } = params;
   const tierInfo = PRICING_TIERS[tier];
 
   if (!tierInfo.priceId) {
@@ -62,10 +68,10 @@ export async function createCheckoutSession(params: {
   }
 
   try {
-    // Create checkout session
     const session = await stripe.checkout.sessions.create({
       mode: tier === "lifetime" ? "payment" : "subscription",
       payment_method_types: ["card"],
+      customer_email: customerEmail,
       line_items: [
         {
           price: tierInfo.priceId,
@@ -79,6 +85,8 @@ export async function createCheckoutSession(params: {
         userId: userId.toString(),
         tier,
       },
+      // Ensure subscription allows for automatic tax if needed
+      automatic_tax: { enabled: false },
     });
 
     return {
@@ -86,8 +94,34 @@ export async function createCheckoutSession(params: {
       url: session.url,
     };
   } catch (error: any) {
-    console.error("Stripe checkout session creation failed:", error);
+    console.error("[Stripe] Checkout session creation failed:", error);
     throw new Error(`Payment initialization failed: ${error.message}`);
+  }
+}
+
+/**
+ * Create a Stripe Customer Portal session
+ */
+export async function createPortalSession(params: {
+  stripeCustomerId: string;
+  returnUrl: string;
+}) {
+  if (!stripe) {
+    throw new Error("Stripe not initialized");
+  }
+
+  try {
+    const session = await stripe.billingPortal.sessions.create({
+      customer: params.stripeCustomerId,
+      return_url: params.returnUrl,
+    });
+
+    return {
+      url: session.url,
+    };
+  } catch (error: any) {
+    console.error("[Stripe] Portal session creation failed:", error);
+    throw new Error(`Portal initialization failed: ${error.message}`);
   }
 }
 
@@ -102,49 +136,9 @@ export function constructWebhookEvent(
     throw new Error("Stripe not initialized");
   }
 
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  if (!webhookSecret) {
+  if (!ENV.stripeWebhookSecret) {
     throw new Error("STRIPE_WEBHOOK_SECRET not set");
   }
 
-  return stripe.webhooks.constructEvent(payload, signature, webhookSecret);
-}
-
-/**
- * Get customer's active subscriptions
- */
-export async function getCustomerSubscriptions(customerId: string) {
-  if (!stripe) {
-    throw new Error("Stripe not initialized");
-  }
-
-  const subscriptions = await stripe.subscriptions.list({
-    customer: customerId,
-    status: "active",
-    limit: 10,
-  });
-
-  return subscriptions.data;
-}
-
-/**
- * Cancel a subscription
- */
-export async function cancelSubscription(subscriptionId: string) {
-  if (!stripe) {
-    throw new Error("Stripe not initialized");
-  }
-
-  return stripe.subscriptions.cancel(subscriptionId);
-}
-
-/**
- * Get payment intent details
- */
-export async function getPaymentIntent(paymentIntentId: string) {
-  if (!stripe) {
-    throw new Error("Stripe not initialized");
-  }
-
-  return stripe.paymentIntents.retrieve(paymentIntentId);
+  return stripe.webhooks.constructEvent(payload, signature, ENV.stripeWebhookSecret);
 }
